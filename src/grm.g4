@@ -10,11 +10,15 @@ FLOAT: NUMBER+ '.' NUMBER+;
 ALPHABET: CAPITAL_LETTER | SMALL_LETTER;
 SYMBOL: '_';
 ANY_THING: ALPHABET | NUMBER | SYMBOL;
+ANY: ANY_THING | '\t' | '\r' | ' ' | '=' | '+=' | '-=' | '*=' | '/=' |  '<' | '>' | '<=' | '>=' | '==' | '!=' | '+' | '-' | '/' | '%' | ',' | '.' | '"' | '\'';
 STRING:'"'(ANY_THING)*'"';
 BOOL:'true'|'false';
 CLASSNAME: CAPITAL_LETTER (ANY_THING)*;
 TYPE: 'int' | 'float' | 'bool' | 'string' | CLASSNAME;
 ID: SMALL_LETTER ANY_THING*;
+
+MULLTI_LINE_COMMENT: '#*' .* '*#' -> skip;
+SINGLE_LINE_COMMENT: '#' (ANY)* '\n' -> skip;
 
 program: importclass* (classDef)?;
 
