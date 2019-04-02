@@ -50,9 +50,12 @@ assignment : prefixexp assignment_operators exp|
 varDec '=' exp|
 arrayDec '=' TYPE args ('['INTEGER']') ;
 
-exp :'none' | BOOL | INTEGER | STRING | FLOAT | prefixexp | exp arithmetic_operator exp|
-CLASSNAME args | '('exp')' | ID args ;
-prefixexp : ID | prefixexp '[' INTEGER ']' | prefixexp '.' ID | prefixexp '.' ID args ;
+//exp
+exp :'none' | BOOL | INTEGER | STRING | FLOAT | prefixexp | CLASSNAME args | ID args | '(' exp ')' | exp arithmetic_operator exp;
+
+//prefixexp
+prefixexp: ID prefixexp2;
+prefixexp2: '[' INTEGER ']' prefixexp2 | '.' ID  prefixexp2 | '.' ID args prefixexp2 | ;
 
 explist : exp (',' exp)*;
 arithmetic_operator: '+' | '-' | '*' | '/' | '%' ;
