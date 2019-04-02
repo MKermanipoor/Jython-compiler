@@ -32,16 +32,16 @@ arrayDec: TYPE '['INTEGER']' ID ;
 methodDec: 'def' (TYPE|'void') ID '(' (parameter)?')''{' ( statement)* '}';
 constructor: 'def' CLASSNAME '('(parameter)?')''{' ( statement)* '}' ;
 parameter: varDec (',' varDec)* ;
-statement : varDec | assignment | print_statment | method_call | return_statment | if_statment | while_statment | if_else_statment | for_statment;
+statement : varDec | assignment | print_statment | method_call | return_statment | if_statment | while_statment  | for_statment;
 print_statment : 'print' '(' (prefixexp | TYPE args | INTEGER |STRING | BOOL) ')' ;
 args : '(' (explist)? ')' ;
 return_statment : 'return' exp ;
 
 condition_list : condition (('or'|'and') condition)* ;
 condition : BOOL | prefixexp | (exp) relational_operators (exp);
-if_statment : 'if' '(' condition_list ')' '{' statement* '}';
+if_statment : 'if' '(' condition_list ')' '{' statement* '}' if_else_statment?;
 while_statment : 'while' '(' condition_list ')' '{' statement* '}' ;
-if_else_statment :'if' '(' condition_list ')' '{' statement* '}' ('elif' '(' condition_list ')' '{' statement* '}')* 'else' '{' statement* '}' ;
+if_else_statment :('elif' '(' condition_list ')' '{' statement* '}')* 'else' '{' statement* '}' ;
 
 for_statment : 'for' ID 'in' prefixexp '{' statement* '}'|
 'for' ID 'in' 'range''('INTEGER (',' INTEGER)? (',' INTEGER)? ')' '{' statement* '}' ;
