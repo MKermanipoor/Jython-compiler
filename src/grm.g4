@@ -38,7 +38,9 @@ args : '(' (explist)? ')' ;
 return_statment : 'return' exp ;
 
 //condition
-condition : BOOL | prefixexp | (exp) relational_operators (exp);
+condition : condition_order2;
+condition_order2: condition_order2 relational_operators_order2 condition_order1 | condition_order1;
+condition_order1: condition_order1 relational_operators_order1 condition_order1 | BOOL | prefixexp;
 condition_list : condition (('or'|'and') condition)* ;
 
 // if
@@ -76,5 +78,6 @@ prefixexp: ID prefixexp2;
 prefixexp2: '[' INTEGER ']' prefixexp2 | '.' ID  prefixexp2 | '.' ID args prefixexp2 | ;
 
 explist : exp (',' exp)*;
-relational_operators : '<' | '>' | '<=' | '>=' | '==' | '!=' ;
+relational_operators_order1: '<' | '>' | '<=' | '>=';
+relational_operators_order2: '==' | '!=' ;
 assignment_operators : '=' | '+=' | '-=' | '*=' | '/=' ;
