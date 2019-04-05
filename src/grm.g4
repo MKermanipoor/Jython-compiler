@@ -38,10 +38,10 @@ args : '(' (explist)? ')' ;
 return_statment : 'return' exp ;
 
 //condition
-condition : condition_order2;
+condition: condition_order2;
 condition_order2: condition_order2 relational_operators_order2 condition_order1 | condition_order1;
 condition_order1: condition_order1 relational_operators_order1 condition_order1 | BOOL | prefixexp;
-condition_list : condition (('or'|'and') condition)* ;
+condition_list: condition (('or'|'and') condition)*;
 
 // if
 if_statment : 'if' '(' condition_list ')' '{' statement* '}';
