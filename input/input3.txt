@@ -1,0 +1,23 @@
+import Test3
+class Compiler{
+def void riz(int ss){
+int[22] array = int()[22]
+while(ss>bb){
+print("HELLO")
+}
+if(bb<ss){
+print("bbSS")
+}
+for item in array{
+if(array<ss){
+
+print("arrayIsLowerThanss")
+}
+
+}
+
+
+
+}
+
+}
