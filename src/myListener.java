@@ -26,6 +26,6 @@ public class myListener extends grmBaseListener {
     @Override
     public void exitProgram(grmParser.ProgramContext ctx) {
         System.out.println(ctx.children.size());
-        System.out.println("+ " + ctx.getChild(1).getText());
+        System.out.println("+ " + ctx.getChild(2).getText());
     }
 }
