@@ -18,29 +18,16 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-/**
- *
- * @author Amin
- */
+
 public class Antlr1 {
 
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String[] args) throws IOException {
   
-        //File path = new File("");
-       // FileInputStream fileInputStream = new FileInputStream(path);
+        File path = new File("input\\input1.txt");
+        FileInputStream fileInputStream = new FileInputStream(path);
         // create a CharStream that reads from standard input
-        ANTLRInputStream input = new ANTLRInputStream("import Ss\n" +
-                "import Masoud\n" +
-                "class SD{\n" +
-                "def int saeid(){\n" +
-                "for temp in range(22,30){\n" +
-                "\n" +
-                "}\n" +
-                "}\n" +
-                "}");
+        ANTLRInputStream input = new ANTLRInputStream(fileInputStream);
         // create a lexer that feeds off of input CharStream
         grmLexer lexer = new grmLexer(input);
         // create a buffer of tokens pulled from the lexer

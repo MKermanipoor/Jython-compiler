@@ -12,7 +12,7 @@ public class myListener extends grmBaseListener {
 
     @Override
     public void exitProgram(grmParser.ProgramContext ctx) {
-        System.out.println("+ " + ctx.getChild(1).getText());
+        System.out.println("+ class name : " + ctx.getChild(1).getChild(1).getText());
         System.out.println("method define number : " + method_defune_number);
     }
 
