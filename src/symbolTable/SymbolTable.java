@@ -20,6 +20,7 @@ public class SymbolTable {
             if (entity.isValid())
                 return false;
             entity.setValid(true);
+            return true;
         }
 
         map.put(name, symbolTableEntity);

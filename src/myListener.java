@@ -36,26 +36,98 @@ public class myListener extends jythonBaseListener {
     @Override
     public void enterVarDec(jythonParser.VarDecContext ctx) {
         String name = ctx.ID().getText();
+        int line=ctx.start.getLine();
         SymbolTableVarEntity entity = null;
         if (ctx.type().USER_TYPE() != null){
-            entity = new SymbolTableVarEntity(VariableType.OBJECT);
+            entity = new SymbolTableVarEntity(VariableType.OBJECT,line);
         }else{
             switch (ctx.type().jythonType().getText()){
                 case "float":
-                    entity = new SymbolTableVarEntity(VariableType.FLOAT);
+                    entity = new SymbolTableVarEntity(VariableType.FLOAT,line);
                     break;
                 case "int":
-                    entity = new SymbolTableVarEntity(VariableType.INTEGER);
+                    entity = new SymbolTableVarEntity(VariableType.INTEGER,line);
                     break;
                 case "bool":
-                    entity = new SymbolTableVarEntity(VariableType.BOOLEAN);
+                    entity = new SymbolTableVarEntity(VariableType.BOOLEAN,line);
                     break;
                 case "string":
-                    entity = new SymbolTableVarEntity(VariableType.STRING);
+                    entity = new SymbolTableVarEntity(VariableType.STRING,line);
                     break;
             }
         }
         symbolTable.add(name, entity);
 
+    }
+
+    @Override
+    public void enterWhile_statment(jythonParser.While_statmentContext ctx) {
+        symbolTable=symbolTable.createChild();
+    }
+
+    @Override
+    public void exitWhile_statment(jythonParser.While_statmentContext ctx) {
+        symbolTable=symbolTable.getParent();
+    }
+
+    @Override
+    public void enterFor_statment(jythonParser.For_statmentContext ctx) {
+        symbolTable=symbolTable.createChild();
+        int line=ctx.start.getLine();
+        
+        String name=ctx.ID().getText();
+        
+        boolean addSymbolTableResult;
+        if(ctx.getChild(3).getText().equals("range")){
+            SymbolTableVarEntity symbolTableVarEntity=new SymbolTableVarEntity(VariableType.INTEGER,line);
+            addSymbolTableResult=symbolTable.add(name,symbolTableVarEntity);
+            
+        }
+        else {
+            // TODO: skewfield 16 May 2019 (Logic) array bod ye kari bokone
+            addSymbolTableResult=false;
+            
+        }
+
+        if(!addSymbolTableResult){
+
+        }
+    }
+
+    @Override
+    public void exitFor_statment(jythonParser.For_statmentContext ctx) {
+        symbolTable=symbolTable.getParent();
+    }
+
+    @Override
+    public void enterIf_else_statment(jythonParser.If_else_statmentContext ctx) {
+        symbolTable=symbolTable.createChild();
+
+    }
+
+    @Override
+    public void exitIf_else_statment(jythonParser.If_else_statmentContext ctx) {
+        symbolTable=symbolTable.getParent();
+    }
+
+    @Override
+    public void enterMethodDec(jythonParser.MethodDecContext ctx) {
+        symbolTable=symbolTable.createChild();
+    }
+
+    @Override
+    public void exitMethodDec(jythonParser.MethodDecContext ctx) {
+        symbolTable=symbolTable.getParent();
+
+    }
+
+    @Override
+    public void enterConstructor(jythonParser.ConstructorContext ctx) {
+        symbolTable=symbolTable.createChild();
+    }
+
+    @Override
+    public void exitConstructor(jythonParser.ConstructorContext ctx) {
+        symbolTable=symbolTable.getParent();
     }
 }

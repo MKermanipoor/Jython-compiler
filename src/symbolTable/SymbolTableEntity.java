@@ -2,7 +2,7 @@ package symbolTable;
 
 public class SymbolTableEntity {
     public enum SymbolTableEntityType{
-        METHOD,VARIABLE,CLASS
+        ARRAY,METHOD,VARIABLE,CLASS
     }
 
     protected SymbolTableEntityType type;
@@ -15,5 +15,15 @@ public class SymbolTableEntity {
 
     public void setValid(boolean valid) {
         this.valid = valid;
+    }
+
+    public SymbolTableEntity(SymbolTableEntityType type, int lineDefenitaion) {
+        this.type = type;
+        this.lineDefenitaion = lineDefenitaion;
+    }
+
+    public SymbolTableEntity(SymbolTableEntityType type) {
+        this.type = type;
+        this.valid=false;
     }
 }
