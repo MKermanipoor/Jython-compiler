@@ -1,6 +1,8 @@
 import Test1
 class Compiler{
+int b
 def void riz(int ss){
+int a
 int[22] array = int()[22]
 while(ss>bb){
 print("HELLO")
