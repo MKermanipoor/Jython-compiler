@@ -142,14 +142,35 @@ public class myListener extends jythonBaseListener {
         }
 
         SymbolTableMethodEntity symbolTableMethodEntity=new SymbolTableMethodEntity(returnType,line);
-        for (jythonParser.ParametersContext parametersContext:ctx.parameters()){
+        for (jythonParser.ParameterContext parameterContext:ctx.parameters().parameter()) {
+            VariableType type = null;
+            if (parameterContext.varDec()!=null){
 
+                if (parameterContext.varDec().type().USER_TYPE() != null){
+                  type=VariableType.OBJECT;
+                }else{
+                    switch (parameterContext.varDec().type().jythonType().getText()){
+                        case "float":
+                            type = VariableType.FLOAT;
+                            break;
+                        case "int":
+                            type = VariableType.INTEGER;
+                            break;
+                        case "bool":
+                            type = VariableType.BOOLEAN;
+                            break;
+                        case "string":
+                            type = VariableType.STRING;
+                            break;
+                    }
+                }
                 
-
-
-
+            }
+            else {
+                type=VariableType.ARRAY;
+            }
+            symbolTableMethodEntity.addParam(type);
         }
-
         if(!symbolTable.add(name, symbolTableMethodEntity)){
             ErrorHandler.doubleMethodDefinition(line,name,currentClassName);
         }
