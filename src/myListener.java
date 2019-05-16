@@ -4,19 +4,17 @@ import gen.jythonBaseListener;
 
 
 import gen.jythonParser;
-import symbolTable.SymbolTable;
-import symbolTable.SymbolTableVarEntity;
-import symbolTable.SympolTableCalssEntity;
-import symbolTable.VariableType;
+import symbolTable.*;
 
 public class myListener extends jythonBaseListener {
 
     private SymbolTable symbolTable = new SymbolTable();
-
+    private String currentClassName;
     @Override
     public void enterClassDec(jythonParser.ClassDecContext ctx) {
         String className = ctx.USER_TYPE(0).getText();
         SympolTableCalssEntity entity;
+        currentClassName=className;
         if (ctx.USER_TYPE().size() > 1){
             entity = new SympolTableCalssEntity(ctx.USER_TYPE(1).getText());
         }else{
@@ -30,11 +28,11 @@ public class myListener extends jythonBaseListener {
     @Override
     public void exitClassDec(jythonParser.ClassDecContext ctx) {
         symbolTable = symbolTable.getParent();
-
+        currentClassName="";
     }
 
     @Override
-    public void enterVarDec(jythonParser.VarDecContext ctx) {
+    public void exitVarDec(jythonParser.VarDecContext ctx) {
         String name = ctx.ID().getText();
         int line=ctx.start.getLine();
         SymbolTableVarEntity entity = null;
@@ -112,9 +110,51 @@ public class myListener extends jythonBaseListener {
 
     @Override
     public void enterMethodDec(jythonParser.MethodDecContext ctx) {
+        String name=ctx.ID().getText();
+        int line=ctx.start.getLine();
+        VariableType returnType = null;
+        if(ctx.getChild(1).getText().equals("void")){
+            returnType =VariableType.VOID;
+        }
+        else {
+            if(ctx.getChild(2).getText().equals("[")){
+                returnType=VariableType.ARRAY;
+            }
+            else {
+                switch (ctx.type().getText()) {
+                    case "float":
+                        returnType = VariableType.FLOAT;
+                        break;
+                    case "int":
+                        returnType = VariableType.INTEGER;
+                        break;
+                    case "bool":
+                        returnType = VariableType.BOOLEAN;
+                        break;
+                    case "string":
+                        returnType = VariableType.STRING;
+                        break;
+                    default:
+                        returnType=VariableType.OBJECT;
+                        break;
+                }
+            }
+        }
+
+        SymbolTableMethodEntity symbolTableMethodEntity=new SymbolTableMethodEntity(returnType,line);
+        for (jythonParser.ParametersContext parametersContext:ctx.parameters()){
+
+                
+
+
+
+        }
+
+        if(!symbolTable.add(name, symbolTableMethodEntity)){
+            ErrorHandler.doubleMethodDefinition(line,name,currentClassName);
+        }
         symbolTable=symbolTable.createChild();
 
-        
     }
 
     @Override
