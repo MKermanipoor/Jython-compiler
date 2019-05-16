@@ -14,11 +14,13 @@ public class myListener extends jythonBaseListener {
     public void enterClassDec(jythonParser.ClassDecContext ctx) {
         String className = ctx.USER_TYPE(0).getText();
         SympolTableCalssEntity entity;
+        int line=ctx.start.getLine();
         currentClassName=className;
         if (ctx.USER_TYPE().size() > 1){
             entity = new SympolTableCalssEntity(ctx.USER_TYPE(1).getText());
         }else{
-            entity = new SympolTableCalssEntity();
+            // TODO: 5/16/2019  parent name
+            entity = new SympolTableCalssEntity(line,"");
         }
         symbolTable.add(className, entity);
 
