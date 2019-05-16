@@ -90,7 +90,7 @@ public class myListener extends jythonBaseListener {
         }
 
         if(!addSymbolTableResult){
-
+                ErrorHandler.doubleVarDefinition(line,name);
         }
     }
 
@@ -113,6 +113,8 @@ public class myListener extends jythonBaseListener {
     @Override
     public void enterMethodDec(jythonParser.MethodDecContext ctx) {
         symbolTable=symbolTable.createChild();
+
+        
     }
 
     @Override
