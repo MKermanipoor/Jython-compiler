@@ -11,6 +11,7 @@ public class myListener extends jythonBaseListener {
     private SymbolTable symbolTable = new SymbolTable();
     private String currentClassName;
     private boolean lineOrder = false;
+    private boolean haveMain=false;
 
     @Override
     public void enterClassDec(jythonParser.ClassDecContext ctx) {
@@ -126,6 +127,9 @@ public class myListener extends jythonBaseListener {
             if (name.equals("print")) {
                 ErrorHandler.redefinePrint(line, symbolTable);
                 return;
+            }
+            if (name.equals("main")){
+                haveMain=true;
             }
 
             VariableType returnType = null;
@@ -249,6 +253,8 @@ public class myListener extends jythonBaseListener {
 
     @Override
     public void exitProgram(jythonParser.ProgramContext ctx) {
+        if(!haveMain)
+            System.err.println("Error104: Can not find main method");
         ErrorHandler.printAll();
     }
 }
