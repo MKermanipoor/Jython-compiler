@@ -56,7 +56,7 @@ for_statment : 'for' ID 'in' leftExp '{' statment* '}'
 
 method_call : 'self' '.' method_call
             | ID args
-            | leftExp '.' ID args;
+            | leftExp '.' method_call;
 
 assignment  : leftExp assignment_operators  expression
             | varDec assignment_operators  expression

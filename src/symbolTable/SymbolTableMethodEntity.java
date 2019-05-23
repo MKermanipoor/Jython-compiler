@@ -21,5 +21,9 @@ public class SymbolTableMethodEntity extends SymbolTableEntity{
         // TODO: skewfield 16 May 2019 (Logic) age class bede pareimmmmm :D
         list.add(variableType);
     }
+    public int parameterSize(){
+
+        return list.size();
+    }
 
 }

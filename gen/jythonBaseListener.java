@@ -267,13 +267,25 @@ public class jythonBaseListener implements jythonListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLeftExp(jythonParser.LeftExpContext ctx) { }
+	@Override public void enterL(jythonParser.LContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLeftExp(jythonParser.LeftExpContext ctx) { }
+	@Override public void exitL(jythonParser.LContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterJustname(jythonParser.JustnameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitJustname(jythonParser.JustnameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -136,11 +136,19 @@ public interface jythonVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRightExp(jythonParser.RightExpContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link jythonParser#leftExp}.
+	 * Visit a parse tree produced by the {@code l}
+	 * labeled alternative in {@link jythonParser#leftExp}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLeftExp(jythonParser.LeftExpContext ctx);
+	T visitL(jythonParser.LContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code justname}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitJustname(jythonParser.JustnameContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link jythonParser#args}.
 	 * @param ctx the parse tree

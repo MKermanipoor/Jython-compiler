@@ -14,10 +14,12 @@ public class SymbolTable {
         return parent;
     }
 
-    public boolean add(String name ,SymbolTableEntity symbolTableEntity){
+    public boolean add(String name ,SymbolTableEntity symbolTableEntity ,boolean lineOrder){
         if (contains(name)){
             SymbolTableEntity entity = getSymbolTableEntity(name);
             if (entity.isValid())
+                return false;
+            if(lineOrder)
                 return false;
             entity.setValid(true);
             return true;

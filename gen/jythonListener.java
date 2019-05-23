@@ -217,15 +217,29 @@ public interface jythonListener extends ParseTreeListener {
 	 */
 	void exitRightExp(jythonParser.RightExpContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link jythonParser#leftExp}.
+	 * Enter a parse tree produced by the {@code l}
+	 * labeled alternative in {@link jythonParser#leftExp}.
 	 * @param ctx the parse tree
 	 */
-	void enterLeftExp(jythonParser.LeftExpContext ctx);
+	void enterL(jythonParser.LContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link jythonParser#leftExp}.
+	 * Exit a parse tree produced by the {@code l}
+	 * labeled alternative in {@link jythonParser#leftExp}.
 	 * @param ctx the parse tree
 	 */
-	void exitLeftExp(jythonParser.LeftExpContext ctx);
+	void exitL(jythonParser.LContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code justname}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterJustname(jythonParser.JustnameContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code justname}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitJustname(jythonParser.JustnameContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link jythonParser#args}.
 	 * @param ctx the parse tree

@@ -1,12 +1,14 @@
 import Test1
 class Compiler{
-int b
-def void riz(int ss){
+
+def int rizz(int s){
+saeid(3)
+a=2
 int a
-int[22] array = int()[22]
-while(ss>bb){
-print("HELLO")
+}
+
+def int saeid(int a){
+
 }
 }
 
-}
