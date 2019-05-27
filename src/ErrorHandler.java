@@ -1,5 +1,4 @@
 import gen.jythonParser;
-import org.antlr.v4.runtime.misc.Pair;
 import symbolTable.SymbolTable;
 import symbolTable.SymbolTableEntity;
 import symbolTable.SymbolTableMethodEntity;
@@ -39,35 +38,52 @@ public class ErrorHandler {
         errorList.add(new ErrorEntity(text, symbolTable, ErrorEntity.ErrorType.NOT_MATTER));
     }
 
-    public static void printAll() {
+    public static void printAll(SymbolTable root) {
+        // check not define variable and method
         for (ErrorEntity errorEntity : errorList) {
             SymbolTable s = errorEntity.symbolTable;
 
             switch (errorEntity.errorType) {
                 case NOT_DEFINE_METHOD:
                     SymbolTableEntity symbolTableEntity = s.getSymbolTableEntity(errorEntity.name);
-                    if (symbolTableEntity instanceof SymbolTableMethodEntity && symbolTableEntity.isValid()){
+                    if (symbolTableEntity instanceof SymbolTableMethodEntity && symbolTableEntity.isValid()) {
                         jythonParser.Method_callContext ctx = errorEntity.ctx;
                         int passSize = ((ctx.args().explist() == null)) ? 0 : ctx.args().explist().expression().size();
 
-                        if (((SymbolTableMethodEntity)symbolTableEntity).parameterSize() == passSize)
+                        if (((SymbolTableMethodEntity) symbolTableEntity).parameterSize() == passSize)
                             continue;
-
-
-
                     }
                     break;
                 case NOT_DEFINE_VARIABLE:
-                    SymbolTableEntity symbolvarTableEntity = s.getSymbolTableEntity(errorEntity.name);
-                    if (symbolvarTableEntity instanceof SymbolTableVarEntity && symbolvarTableEntity.isValid()){
-                        if (!((SymbolTableVarEntity)symbolvarTableEntity).isLineOrder())
+                    SymbolTableEntity symbolVarTableEntity = s.getSymbolTableEntity(errorEntity.name);
+                    if (symbolVarTableEntity instanceof SymbolTableVarEntity && symbolVarTableEntity.isValid()) {
+                        if (!((SymbolTableVarEntity) symbolVarTableEntity).isLineOrder())
                             continue;
                     }
-
                     break;
-
             }
             System.err.println(errorEntity.text);
+        }
+
+        // check duplicate var definition after parse
+        checkDuplicateVar(root);
+    }
+
+    private static void checkDuplicateVar(SymbolTable symbolTable){
+        SymbolTable parent = symbolTable.getParent();
+        if (parent != null) {
+            symbolTable.getMap().forEach((s, symbolTableEntity) -> {
+                SymbolTableEntity temp = parent.getSymbolTableEntity(s);
+                if (temp == null)
+                    return;
+
+                if (temp instanceof SymbolTableVarEntity && symbolTableEntity instanceof SymbolTableVarEntity)
+                    System.err.println("Error103: in line " + symbolTableEntity.getLineDefenitaion() + " , " + s + " has been defined already in current scope");
+            });
+        }
+
+        for (SymbolTable child : symbolTable.getChilds()){
+            checkDuplicateVar(child);
         }
     }
 

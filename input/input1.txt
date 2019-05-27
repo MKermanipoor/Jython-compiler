@@ -5,9 +5,10 @@ def int rizz(int s){
 saeid(3)
 a=2
 int a
+int a
 }
-
-def int saeid(int a){
+int a
+def int saeid(int b){
 
 }
 

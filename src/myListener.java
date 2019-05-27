@@ -25,7 +25,7 @@ public class myListener extends jythonBaseListener {
             // TODO: 5/16/2019  parent name
             entity = new SympolTableCalssEntity(line, "");
         }
-        symbolTable.add(className, entity, lineOrder);
+        symbolTable.add(className, entity);
 
         symbolTable = symbolTable.createChild();
     }
@@ -65,7 +65,7 @@ public class myListener extends jythonBaseListener {
                     break;
             }
         }
-        symbolTable.add(name, entity, lineOrder);
+        symbolTable.add(name, entity);
 
     }
 
@@ -89,7 +89,7 @@ public class myListener extends jythonBaseListener {
         boolean addSymbolTableResult;
         if (ctx.getChild(3).getText().equals("range")) {
             SymbolTableVarEntity symbolTableVarEntity = new SymbolTableVarEntity(VariableType.INTEGER, line, lineOrder);
-            addSymbolTableResult = symbolTable.add(name, symbolTableVarEntity, lineOrder);
+            addSymbolTableResult = symbolTable.add(name, symbolTableVarEntity);
 
         } else {
             // TODO: skewfield 16 May 2019 (Logic) array bod ye kari bokone
@@ -188,7 +188,7 @@ public class myListener extends jythonBaseListener {
                 }
                 symbolTableMethodEntity.addParam(type);
             }
-            if (!symbolTable.add(name, symbolTableMethodEntity, lineOrder)) {
+            if (!symbolTable.add(name, symbolTableMethodEntity)) {
                 ErrorHandler.doubleMethodDefinition(line, name, currentClassName, symbolTable);
             }
         } finally {
@@ -255,6 +255,6 @@ public class myListener extends jythonBaseListener {
     public void exitProgram(jythonParser.ProgramContext ctx) {
         if(!haveMain)
             System.err.println("Error104: Can not find main method");
-        ErrorHandler.printAll();
+        ErrorHandler.printAll(symbolTable);
     }
 }

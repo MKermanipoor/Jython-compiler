@@ -1,10 +1,12 @@
 package symbolTable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SymbolTable {
     private SymbolTable parent = null;
     private HashMap<String , SymbolTableEntity> map = new HashMap<>();
+    private ArrayList<SymbolTable> childs = new ArrayList<>();
 
     public void setParent(SymbolTable parent) {
         this.parent = parent;
@@ -14,25 +16,13 @@ public class SymbolTable {
         return parent;
     }
 
-    public boolean add(String name ,SymbolTableEntity symbolTableEntity ,boolean lineOrder){
+    public boolean add(String name ,SymbolTableEntity symbolTableEntity){
         if (contains(name)){
             SymbolTableEntity entity = getSymbolTableEntity(name);
             if (entity.isValid())
                 return false;
-            if(lineOrder)
-                return false;
             entity.setValid(true);
             return true;
-        }
-
-        map.put(name, symbolTableEntity);
-        return true;
-    }
-
-    public boolean addNotValid(String name ,SymbolTableEntity symbolTableEntity){
-        symbolTableEntity.setValid(false);
-        if (contains(name)){
-            return false;
         }
 
         map.put(name, symbolTableEntity);
@@ -58,6 +48,7 @@ public class SymbolTable {
     public SymbolTable createChild(){
         SymbolTable child = new SymbolTable();
         child.setParent(this);
+        this.childs.add(child);
         return child;
     }
 
@@ -66,5 +57,13 @@ public class SymbolTable {
         return "SymbolTable{" +
                 ", map=" + map +
                 '}';
+    }
+
+    public ArrayList<SymbolTable> getChilds() {
+        return childs;
+    }
+
+    public HashMap<String, SymbolTableEntity> getMap() {
+        return map;
     }
 }

@@ -26,4 +26,8 @@ public class SymbolTableEntity {
         this.type = type;
         this.valid=false;
     }
+
+    public int getLineDefenitaion() {
+        return lineDefenitaion;
+    }
 }
