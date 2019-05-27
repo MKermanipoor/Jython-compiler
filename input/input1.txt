@@ -9,8 +9,12 @@ int a
 }
 int a
 def int saeid(int b){
+    int[20] array
 
+    for i in array{
+
+    }
 }
-
+int array
 }
 

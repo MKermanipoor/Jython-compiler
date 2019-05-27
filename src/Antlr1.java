@@ -26,7 +26,7 @@ public class Antlr1 {
     public static void main(String[] args) throws IOException {
 
         File rootPath = new File("input\\");
-        File[] fileList = rootPath.listFiles((dir, name) -> name.endsWith(".txt"));
+        File[] fileList = rootPath.listFiles((dir, name) -> name.endsWith("input1.txt"));
         for (File file : fileList) {
             FileInputStream fileInputStream = new FileInputStream(file);
             // create a CharStream that reads from standard input

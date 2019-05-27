@@ -42,9 +42,9 @@ public class myListener extends jythonBaseListener {
         int line = ctx.start.getLine();
         SymbolTableVarEntity entity = null;
 
-        if (symbolTable.getSymbolTableEntity(name) instanceof SymbolTableVarEntity) {
-
+        if (symbolTable.containsVarOrArray(name)) {
             ErrorHandler.doubleVarDefinition(line, name, symbolTable);
+            return;
         }
 
         if (ctx.type().USER_TYPE() != null) {
@@ -66,7 +66,39 @@ public class myListener extends jythonBaseListener {
             }
         }
         symbolTable.add(name, entity);
+    }
 
+    @Override
+    public void exitArrayDec(jythonParser.ArrayDecContext ctx) {
+        String name = ctx.ID().getText();
+        int line = ctx.start.getLine();
+
+        if (symbolTable.containsVarOrArray(name)){
+            ErrorHandler.doubleVarDefinition(line, name, symbolTable);
+            return;
+        }
+
+        SymbolTableArrayEntity entity = null;
+
+        if (ctx.type().USER_TYPE() != null) {
+            entity = new SymbolTableArrayEntity(VariableType.OBJECT, line);
+        } else {
+            switch (ctx.type().jythonType().getText()) {
+                case "float":
+                    entity = new SymbolTableArrayEntity(VariableType.FLOAT, line);
+                    break;
+                case "int":
+                    entity = new SymbolTableArrayEntity(VariableType.INTEGER, line);
+                    break;
+                case "bool":
+                    entity = new SymbolTableArrayEntity(VariableType.BOOLEAN, line);
+                    break;
+                case "string":
+                    entity = new SymbolTableArrayEntity(VariableType.STRING, line);
+                    break;
+            }
+        }
+        symbolTable.add(name, entity);
     }
 
     @Override
@@ -93,8 +125,7 @@ public class myListener extends jythonBaseListener {
 
         } else {
             // TODO: skewfield 16 May 2019 (Logic) array bod ye kari bokone
-            addSymbolTableResult = false;
-
+            addSymbolTableResult = true;
         }
 
         if (!addSymbolTableResult) {
@@ -222,7 +253,7 @@ public class myListener extends jythonBaseListener {
         if (ctx.getChildCount() == 1 && ctx.ID() != null) {
             String name = ctx.ID().getText();
             SymbolTableEntity symbolTableEntity = symbolTable.getSymbolTableEntity(name);
-            if (!(symbolTableEntity instanceof SymbolTableVarEntity)) {
+            if (!(symbolTableEntity instanceof SymbolTableVarEntity) && !(symbolTableEntity instanceof SymbolTableArrayEntity)) {
 
                 ErrorHandler.notDefineVariable(ctx.start.getLine(), name, symbolTable);
             }
@@ -256,5 +287,8 @@ public class myListener extends jythonBaseListener {
         if(!haveMain)
             System.err.println("Error104: Can not find main method");
         ErrorHandler.printAll(symbolTable);
+        ErrorHandler.reset();
     }
+
+
 }

@@ -37,6 +37,11 @@ public class SymbolTable {
         return parent.contains(name);
     }
 
+    public boolean containsVarOrArray(String name){
+        SymbolTableEntity temp = getSymbolTableEntity(name);
+        return temp instanceof SymbolTableVarEntity || temp instanceof SymbolTableArrayEntity;
+    }
+
     public SymbolTableEntity getSymbolTableEntity(String name){
         SymbolTableEntity temp ;
         temp = map.get(name);

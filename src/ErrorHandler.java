@@ -73,12 +73,9 @@ public class ErrorHandler {
         SymbolTable parent = symbolTable.getParent();
         if (parent != null) {
             symbolTable.getMap().forEach((s, symbolTableEntity) -> {
-                SymbolTableEntity temp = parent.getSymbolTableEntity(s);
-                if (temp == null)
-                    return;
-
-                if (temp instanceof SymbolTableVarEntity && symbolTableEntity instanceof SymbolTableVarEntity)
+                if (parent.containsVarOrArray(s))
                     System.err.println("Error103: in line " + symbolTableEntity.getLineDefenitaion() + " , " + s + " has been defined already in current scope");
+
             });
         }
 
@@ -118,5 +115,9 @@ public class ErrorHandler {
             this.errorType = errorType;
             this.ctx = ctx;
         }
+    }
+
+    public static void reset(){
+        errorList.clear();
     }
 }
