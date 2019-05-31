@@ -9,6 +9,11 @@ import java.util.ArrayList;
 public class ErrorHandler {
     private static ArrayList<ErrorEntity> errorList = new ArrayList<>();
 
+    public static void doubleClassDefinition(int line, String name, SymbolTable symbolTable) {
+        String text = "Error101: in line " + line + " , " + name + " has been defined already in current scope";
+        errorList.add(new ErrorEntity(text, symbolTable, ErrorEntity.ErrorType.NOT_MATTER));
+    }
+
     public static void doubleVarDefinition(int line, String name, SymbolTable symbolTable) {
         String text = "Error103: in line " + line + " , " + name + " has been defined already in current scope";
         errorList.add(new ErrorEntity(text, symbolTable, ErrorEntity.ErrorType.NOT_MATTER));
@@ -40,6 +45,7 @@ public class ErrorHandler {
 
     public static void printAll(SymbolTable root) {
         // check not define variable and method
+        main_for:
         for (ErrorEntity errorEntity : errorList) {
             SymbolTable s = errorEntity.symbolTable;
 
@@ -56,9 +62,15 @@ public class ErrorHandler {
                     break;
                 case NOT_DEFINE_VARIABLE:
                     SymbolTableEntity symbolVarTableEntity = s.getSymbolTableEntity(errorEntity.name);
-                    if (symbolVarTableEntity instanceof SymbolTableVarEntity && symbolVarTableEntity.isValid()) {
+                    SymbolTable temp = s;
+                    while ((symbolVarTableEntity instanceof SymbolTableVarEntity && symbolVarTableEntity.isValid())) {
                         if (!((SymbolTableVarEntity) symbolVarTableEntity).isLineOrder())
-                            continue;
+                            continue main_for;
+                        temp = temp.getParent();
+                        if (temp == null)
+                            break;
+
+                        symbolVarTableEntity = temp.getSymbolTableEntity(errorEntity.name);
                     }
                     break;
             }

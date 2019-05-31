@@ -8,25 +8,33 @@ import symbolTable.*;
 
 public class myListener extends jythonBaseListener {
 
-    private SymbolTable symbolTable = new SymbolTable();
+    private SymbolTable symbolTable;
     private String currentClassName;
     private boolean lineOrder = false;
     private boolean haveMain=false;
 
+    public myListener(SymbolTable symbolTable) {
+        this.symbolTable = symbolTable;
+    }
+
     @Override
     public void enterClassDec(jythonParser.ClassDecContext ctx) {
         String className = ctx.USER_TYPE(0).getText();
-        SympolTableCalssEntity entity;
+        SymbolTableCalssEntity entity;
         int line = ctx.start.getLine();
         currentClassName = className;
-        if (ctx.USER_TYPE().size() > 1) {
-            entity = new SympolTableCalssEntity(ctx.USER_TYPE(1).getText());
-        } else {
-            // TODO: 5/16/2019  parent name
-            entity = new SympolTableCalssEntity(line, "");
+        SymbolTableEntity find = symbolTable.getSymbolTableEntity(className);
+        if (find instanceof SymbolTableCalssEntity){
+            ErrorHandler.doubleClassDefinition(line,className,symbolTable);
+        }else {
+            if (ctx.USER_TYPE().size() > 1) {
+                entity = new SymbolTableCalssEntity(ctx.USER_TYPE(1).getText());
+            } else {
+                // TODO: 5/16/2019  parent name
+                entity = new SymbolTableCalssEntity(line, "");
+            }
+            symbolTable.add(className, entity);
         }
-        symbolTable.add(className, entity);
-
         symbolTable = symbolTable.createChild();
     }
 

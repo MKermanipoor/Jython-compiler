@@ -1,20 +1,23 @@
 import Test1
 class Compiler{
-
+Riz c
 def int rizz(int s){
+c.rizz(a/2)
 saeid(3)
 a=2
 int a
-int a
+
 }
 int a
 def int saeid(int b){
-    int[20] array
+
 
     for i in array{
 
     }
 }
 int array
+int[20] array
 }
+
 

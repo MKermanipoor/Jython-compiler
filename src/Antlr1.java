@@ -18,15 +18,16 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import symbolTable.SymbolTable;
 
 
 public class Antlr1 {
 
 
     public static void main(String[] args) throws IOException {
-
+        SymbolTable symbolTable = new SymbolTable();
         File rootPath = new File("input\\");
-        File[] fileList = rootPath.listFiles((dir, name) -> name.endsWith("input1.txt"));
+        File[] fileList = rootPath.listFiles((dir, name) -> name.endsWith(".txt"));
         for (File file : fileList) {
             FileInputStream fileInputStream = new FileInputStream(file);
             // create a CharStream that reads from standard input
@@ -41,7 +42,7 @@ public class Antlr1 {
             // Create a generic parse tree walker that can trigger callbacks
             ParseTreeWalker walker = new ParseTreeWalker();
             // Walk the tree created during the parse, trigger callbacks
-            walker.walk(new myListener(), tree);
+            walker.walk(new myListener(symbolTable), tree);
             System.out.println(); // print a \n after translation
             fileInputStream.close();
         }
