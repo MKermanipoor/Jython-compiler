@@ -13,6 +13,14 @@ public class ErrorHandler {
         String text = "Error101: in line " + line + " , " + name + " has been defined already in current scope";
         errorList.add(new ErrorEntity(text, symbolTable, ErrorEntity.ErrorType.NOT_MATTER));
     }
+    public static void notFindClass(int line, String name, SymbolTable symbolTable) {
+        String text = "Error106: in line " + line + " , cannot find class " + name ;
+        errorList.add(new ErrorEntity(text, symbolTable, ErrorEntity.ErrorType.NOT_MATTER));
+    }
+    public static void doubleImportDefinition(int line, String name, SymbolTable symbolTable) {
+        String text = "Error110: in line " + line + " , " + name + " has been imported already";
+        errorList.add(new ErrorEntity(text, symbolTable, ErrorEntity.ErrorType.NOT_MATTER));
+    }
 
     public static void doubleVarDefinition(int line, String name, SymbolTable symbolTable) {
         String text = "Error103: in line " + line + " , " + name + " has been defined already in current scope";
@@ -37,14 +45,21 @@ public class ErrorHandler {
         errorList.add(new ErrorEntity(text, name, symbolTable, ErrorEntity.ErrorType.NOT_DEFINE_METHOD, ctx));
 
     }
+    public static void notDefineMainMethod() {
+
+        String text = "Error104: Can not find main method";
+        errorList.add(new ErrorEntity(text, null, null, ErrorEntity.ErrorType.NOT_MATTER));
+
+    }
 
     public static void redefinePrint(int line, SymbolTable symbolTable) {
         String text = "Error109: in line " + line + " , Definition of print as method of a class";
         errorList.add(new ErrorEntity(text, symbolTable, ErrorEntity.ErrorType.NOT_MATTER));
     }
 
-    public static void printAll(SymbolTable root) {
+    public static void printAll(SymbolTable root, String fileName) {
         // check not define variable and method
+        StringBuilder stringBuilder = new StringBuilder();
         main_for:
         for (ErrorEntity errorEntity : errorList) {
             SymbolTable s = errorEntity.symbolTable;
@@ -74,25 +89,30 @@ public class ErrorHandler {
                     }
                     break;
             }
-            System.err.println(errorEntity.text);
+            stringBuilder.append("\t").append(errorEntity.text).append("\n");
         }
 
         // check duplicate var definition after parse
-        checkDuplicateVar(root);
+        checkDuplicateVar(root, stringBuilder);
+
+        if (!stringBuilder.toString().isEmpty()){
+            System.err.println("Error(s) in file " + fileName + ":");
+            System.err.println(stringBuilder.toString());
+        }
     }
 
-    private static void checkDuplicateVar(SymbolTable symbolTable){
+    private static void checkDuplicateVar(SymbolTable symbolTable, StringBuilder stringBuilder){
         SymbolTable parent = symbolTable.getParent();
         if (parent != null) {
             symbolTable.getMap().forEach((s, symbolTableEntity) -> {
                 if (parent.containsVarOrArray(s))
-                    System.err.println("Error103: in line " + symbolTableEntity.getLineDefenitaion() + " , " + s + " has been defined already in current scope");
+                    stringBuilder.append("\t").append("Error103: in line ").append(symbolTableEntity.getLineDefenitaion()).append(" , ").append(s).append(" has been defined already in current scope").append("\n");
 
             });
         }
 
         for (SymbolTable child : symbolTable.getChilds()){
-            checkDuplicateVar(child);
+            checkDuplicateVar(child, stringBuilder);
         }
     }
 

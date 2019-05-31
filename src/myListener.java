@@ -10,11 +10,32 @@ public class myListener extends jythonBaseListener {
 
     private SymbolTable symbolTable;
     private String currentClassName;
+    private final String fileName;
     private boolean lineOrder = false;
     private boolean haveMain=false;
+    private boolean haveImport = false;
 
-    public myListener(SymbolTable symbolTable) {
+    public myListener(SymbolTable symbolTable, String fileName) {
         this.symbolTable = symbolTable;
+        this.fileName = fileName;
+    }
+
+    @Override
+    public void exitImportclass(jythonParser.ImportclassContext ctx) {
+        if (!haveImport){
+            symbolTable = symbolTable.createChild();
+            haveImport = true;
+        }
+
+        int line = ctx.start.getLine();
+        String className = ctx.USER_TYPE().getText();
+        SymbolTableCalssEntity entity = new SymbolTableCalssEntity(line, className);
+        SymbolTableEntity find = symbolTable.getSymbolTableEntity(className);
+        if (find instanceof SymbolTableCalssEntity){
+            ErrorHandler.doubleImportDefinition(line,className,symbolTable);
+        }else{
+            symbolTable.add(className, entity);
+        }
     }
 
     @Override
@@ -57,6 +78,10 @@ public class myListener extends jythonBaseListener {
 
         if (ctx.type().USER_TYPE() != null) {
             entity = new SymbolTableVarEntity(VariableType.OBJECT, line, lineOrder);
+            SymbolTableEntity find = symbolTable.getSymbolTableEntity(ctx.type().USER_TYPE().getText());
+            if (!(find instanceof SymbolTableCalssEntity)){
+                ErrorHandler.notFindClass(line,ctx.type().USER_TYPE().getText(),symbolTable);
+            }
         } else {
             switch (ctx.type().jythonType().getText()) {
                 case "float":
@@ -293,8 +318,8 @@ public class myListener extends jythonBaseListener {
     @Override
     public void exitProgram(jythonParser.ProgramContext ctx) {
         if(!haveMain)
-            System.err.println("Error104: Can not find main method");
-        ErrorHandler.printAll(symbolTable);
+            ErrorHandler.notDefineMainMethod();
+        ErrorHandler.printAll(symbolTable, fileName);
         ErrorHandler.reset();
     }
 

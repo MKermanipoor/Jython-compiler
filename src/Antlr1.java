@@ -42,7 +42,7 @@ public class Antlr1 {
             // Create a generic parse tree walker that can trigger callbacks
             ParseTreeWalker walker = new ParseTreeWalker();
             // Walk the tree created during the parse, trigger callbacks
-            walker.walk(new myListener(symbolTable), tree);
+            walker.walk(new myListener(symbolTable, file.getName()), tree);
             System.out.println(); // print a \n after translation
             fileInputStream.close();
         }

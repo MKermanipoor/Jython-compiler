@@ -1,6 +1,7 @@
 import Test1
+
 class Compiler{
-Riz c
+
 def int rizz(int s){
 c.rizz(a/2)
 saeid(3)
