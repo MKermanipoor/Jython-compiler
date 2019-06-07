@@ -1,4 +1,4 @@
-// Generated from D:/UNIVERSITY/code/compiler/Jython-compiler/src\jython.g4 by ANTLR 4.7.2
+// Generated from F:/University/Compiler/Jython-compiler/src\jython.g4 by ANTLR 4.7.2
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -58,11 +58,19 @@ public interface jythonVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitConstructor(jythonParser.ConstructorContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link jythonParser#parameter}.
+	 * Visit a parse tree produced by the {@code varParam}
+	 * labeled alternative in {@link jythonParser#parameter}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParameter(jythonParser.ParameterContext ctx);
+	T visitVarParam(jythonParser.VarParamContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code arrParram}
+	 * labeled alternative in {@link jythonParser#parameter}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrParram(jythonParser.ArrParramContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link jythonParser#parameters}.
 	 * @param ctx the parse tree

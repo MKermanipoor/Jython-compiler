@@ -1,4 +1,6 @@
 import Test1
+import Test1
+import Compiler2
 
 class Compiler{
 

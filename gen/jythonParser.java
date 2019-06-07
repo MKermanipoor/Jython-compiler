@@ -1,4 +1,4 @@
-// Generated from D:/UNIVERSITY/code/compiler/Jython-compiler/src\jython.g4 by ANTLR 4.7.2
+// Generated from F:/University/Compiler/Jython-compiler/src\jython.g4 by ANTLR 4.7.2
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -693,27 +693,51 @@ public class jythonParser extends Parser {
 	}
 
 	public static class ParameterContext extends ParserRuleContext {
-		public VarDecContext varDec() {
-			return getRuleContext(VarDecContext.class,0);
-		}
-		public ArrayDecContext arrayDec() {
-			return getRuleContext(ArrayDecContext.class,0);
-		}
 		public ParameterContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_parameter; }
+	 
+		public ParameterContext() { }
+		public void copyFrom(ParameterContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class VarParamContext extends ParameterContext {
+		public VarDecContext varDec() {
+			return getRuleContext(VarDecContext.class,0);
+		}
+		public VarParamContext(ParameterContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof jythonListener ) ((jythonListener)listener).enterParameter(this);
+			if ( listener instanceof jythonListener ) ((jythonListener)listener).enterVarParam(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof jythonListener ) ((jythonListener)listener).exitParameter(this);
+			if ( listener instanceof jythonListener ) ((jythonListener)listener).exitVarParam(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof jythonVisitor ) return ((jythonVisitor<? extends T>)visitor).visitParameter(this);
+			if ( visitor instanceof jythonVisitor ) return ((jythonVisitor<? extends T>)visitor).visitVarParam(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ArrParramContext extends ParameterContext {
+		public ArrayDecContext arrayDec() {
+			return getRuleContext(ArrayDecContext.class,0);
+		}
+		public ArrParramContext(ParameterContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof jythonListener ) ((jythonListener)listener).enterArrParram(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof jythonListener ) ((jythonListener)listener).exitArrParram(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof jythonVisitor ) return ((jythonVisitor<? extends T>)visitor).visitArrParram(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -722,24 +746,25 @@ public class jythonParser extends Parser {
 		ParameterContext _localctx = new ParameterContext(_ctx, getState());
 		enterRule(_localctx, 16, RULE_parameter);
 		try {
-			enterOuterAlt(_localctx, 1);
-			{
 			setState(143);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 			case 1:
+				_localctx = new VarParamContext(_localctx);
+				enterOuterAlt(_localctx, 1);
 				{
 				setState(141);
 				varDec();
 				}
 				break;
 			case 2:
+				_localctx = new ArrParramContext(_localctx);
+				enterOuterAlt(_localctx, 2);
 				{
 				setState(142);
 				arrayDec();
 				}
 				break;
-			}
 			}
 		}
 		catch (RecognitionException re) {

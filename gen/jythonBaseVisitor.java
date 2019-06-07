@@ -1,4 +1,4 @@
-// Generated from D:/UNIVERSITY/code/compiler/Jython-compiler/src\jython.g4 by ANTLR 4.7.2
+// Generated from F:/University/Compiler/Jython-compiler/src\jython.g4 by ANTLR 4.7.2
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
@@ -72,7 +72,14 @@ public class jythonBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitParameter(jythonParser.ParameterContext ctx) { return visitChildren(ctx); }
+	@Override public T visitVarParam(jythonParser.VarParamContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitArrParram(jythonParser.ArrParramContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
