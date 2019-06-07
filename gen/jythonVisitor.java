@@ -58,19 +58,11 @@ public interface jythonVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitConstructor(jythonParser.ConstructorContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code varParam}
-	 * labeled alternative in {@link jythonParser#parameter}.
+	 * Visit a parse tree produced by {@link jythonParser#parameter}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVarParam(jythonParser.VarParamContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code arrParram}
-	 * labeled alternative in {@link jythonParser#parameter}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArrParram(jythonParser.ArrParramContext ctx);
+	T visitParameter(jythonParser.ParameterContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link jythonParser#parameters}.
 	 * @param ctx the parse tree

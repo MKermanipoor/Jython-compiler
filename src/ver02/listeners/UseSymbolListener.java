@@ -14,6 +14,6 @@ public class UseSymbolListener extends MainListener {
         String className = ctx.USER_TYPE().getText();
         int line = ctx.start.getLine();
         if (masterSymbolTable.findClass(className) == null)
-            errorHandler.notDefineClass(className, line);
+            errorHandler.notFindClass(className, line);
     }
 }

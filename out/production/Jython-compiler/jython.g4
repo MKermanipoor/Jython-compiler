@@ -18,9 +18,9 @@ varDec :   type  ID  ;
 
 arrayDec : type '['expression']' ID  ;
 
-methodDec : 'def'  (type|'void'|type '['']')   ID  '(' parameters ')''{' ( statment)* '}';
+methodDec : 'def'  (type|'void'|type '['']')   ID  '(' (parameters)? ')''{' ( statment)* '}';
 
-constructor : 'def'  USER_TYPE '(' parameters ')''{' ( statment)* '}' ;
+constructor : 'def'  USER_TYPE '(' (parameters)? ')''{' ( statment)* '}' ;
 
 parameter : (varDec | arrayDec);
 

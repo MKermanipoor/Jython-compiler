@@ -87,29 +87,15 @@ public interface jythonListener extends ParseTreeListener {
 	 */
 	void exitConstructor(jythonParser.ConstructorContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code varParam}
-	 * labeled alternative in {@link jythonParser#parameter}.
+	 * Enter a parse tree produced by {@link jythonParser#parameter}.
 	 * @param ctx the parse tree
 	 */
-	void enterVarParam(jythonParser.VarParamContext ctx);
+	void enterParameter(jythonParser.ParameterContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code varParam}
-	 * labeled alternative in {@link jythonParser#parameter}.
+	 * Exit a parse tree produced by {@link jythonParser#parameter}.
 	 * @param ctx the parse tree
 	 */
-	void exitVarParam(jythonParser.VarParamContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code arrParram}
-	 * labeled alternative in {@link jythonParser#parameter}.
-	 * @param ctx the parse tree
-	 */
-	void enterArrParram(jythonParser.ArrParramContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code arrParram}
-	 * labeled alternative in {@link jythonParser#parameter}.
-	 * @param ctx the parse tree
-	 */
-	void exitArrParram(jythonParser.ArrParramContext ctx);
+	void exitParameter(jythonParser.ParameterContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link jythonParser#parameters}.
 	 * @param ctx the parse tree

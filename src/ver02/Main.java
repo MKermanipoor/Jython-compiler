@@ -40,6 +40,8 @@ public class Main {
             fileInputStream.close();
         }
         System.out.println(symbolTable);
+
+
         for (File file : fileList) {
             FileInputStream fileInputStream = new FileInputStream(file);
             // create a CharStream that reads from standard input

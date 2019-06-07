@@ -21,7 +21,11 @@ public class ErrorHandler {
         errorTable.get(nowFileName).add(new DoubleClassDefine(className, line));
     }
 
-    public void notDefineClass(String className, int line){
+    public void doubleDefineVarriable(String variableName, int line){
+        errorTable.get(nowFileName).add(new DoubleVarDefine(variableName, line));
+    }
+
+    public void notFindClass(String className, int line){
         errorTable.get(nowFileName).add(new NotDefineClass(className, line));
     }
 

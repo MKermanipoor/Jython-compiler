@@ -3,24 +3,12 @@ import Test1
 import Compiler2
 
 class Compiler{
-
-def int rizz(int s){
-c.rizz(a/2)
-saeid(3)
-a=2
 int a
-
-}
+def int rizz(){
 int a
-def int saeid(int b){
-
-
-    for i in array{
-
-    }
 }
-int array
-int[20] array
+def int saeid(){
+}
 }
 
 

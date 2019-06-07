@@ -1,13 +1,17 @@
 package ver02.symbolTable;
 
 import ver02.symbolTable.subSybmolTable.SubClassSymbolTable;
+import ver02.symbolTable.subSybmolTable.SubVarSymbolTable;
+import ver02.symbolTable.subSybmolTable.SubVarSymbolTable.VarEntity.VarType;
 
 import java.util.HashMap;
 
 public class SymbolTable {
     private SymbolTable parent = null;
     private HashMap<String, SymbolTable> childs = new HashMap<>();
+
     private SubClassSymbolTable classTable = null;
+    private SubVarSymbolTable varTable = null;
 
     public SymbolTable createChild(String key) {
         if (childs.containsKey(key))
@@ -23,6 +27,8 @@ public class SymbolTable {
         return parent;
     }
 
+
+    //************************ class part ************************
     private void checkClassTable() {
         if (classTable == null)
             classTable = new SubClassSymbolTable(this);
@@ -49,6 +55,47 @@ public class SymbolTable {
 
         if (parent != null && result == null)
             return parent.findClass(className);
+
+        return result;
+    }
+
+    //************************ var part ************************
+    private void checkVarTable(){
+        if (varTable != null)
+            return;
+
+        varTable = new SubVarSymbolTable(this);
+    }
+
+    public void addVarEntity(String varName, VarType varType, int lineDefinition){
+        checkVarTable();
+        varTable.addVariable(varName, varType, lineDefinition);
+    }
+
+    public void addVarEntity(String varName, String className, int lineDefinition){
+        checkVarTable();
+        varTable.addVariable(varName, className, lineDefinition);
+    }
+
+    public void addAttributeEntity(String varName, VarType varType, int lineDefinition){
+        checkVarTable();
+        varTable.addAttribute(varName, varType, lineDefinition);
+    }
+
+    public void addAttributeEntity(String varName, String className, int lineDefinition){
+        checkVarTable();
+        varTable.addAttribute(varName, className, lineDefinition);
+    }
+
+    public SubVarSymbolTable.VarEntity findVar(String varName){
+        SubVarSymbolTable.VarEntity result;
+        if (varTable == null)
+            result = null;
+        else
+            result = varTable.getEntity(varName);
+
+        if (parent != null && result == null)
+            return parent.findVar(varName);
 
         return result;
     }

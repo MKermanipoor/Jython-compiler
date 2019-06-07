@@ -13,17 +13,17 @@ public class SubClassSymbolTable extends SubSymbolTable<SubClassSymbolTable.Clas
     }
 
     public static class ClassEntity{
-        private int lineDefination;
+        private int lineDefinition;
         private String suberClassName;
         // TODO Masoud 6/7/2019: (DS) add constructor set
 
 
         public ClassEntity(int lineDefinition) {
-            this.lineDefination = lineDefinition;
+            this.lineDefinition = lineDefinition;
         }
 
-        public int getLineDefination() {
-            return lineDefination;
+        public int getLineDefinition() {
+            return lineDefinition;
         }
 
         public String getSuberClassName() {

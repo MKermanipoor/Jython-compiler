@@ -12,6 +12,8 @@ public class MainListener extends jythonBaseListener {
     final ErrorHandler errorHandler;
     final SymbolTable masterSymbolTable;
 
+    private boolean inMethod = false;
+
     SymbolTable symbolTable;
     HashSet<String> importClass = new HashSet<>();
 
@@ -21,6 +23,10 @@ public class MainListener extends jythonBaseListener {
         this.errorHandler.setNowFileName(this.fileName);
         this.masterSymbolTable = masterSymbolTable;
         this.symbolTable = this.masterSymbolTable;
+    }
+
+    public boolean isInMethod() {
+        return inMethod;
     }
 
     @Override
@@ -38,11 +44,13 @@ public class MainListener extends jythonBaseListener {
     public void enterMethodDec(jythonParser.MethodDecContext ctx) {
         int line = ctx.start.getLine();
         symbolTable = symbolTable.createChild(fileName + " method " +  line);
+        inMethod = true;
     }
 
     @Override
     public void exitMethodDec(jythonParser.MethodDecContext ctx) {
         symbolTable = symbolTable.getParent();
+        inMethod = false;
     }
 
     @Override

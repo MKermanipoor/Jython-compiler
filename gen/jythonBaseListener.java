@@ -111,25 +111,13 @@ public class jythonBaseListener implements jythonListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarParam(jythonParser.VarParamContext ctx) { }
+	@Override public void enterParameter(jythonParser.ParameterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVarParam(jythonParser.VarParamContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArrParram(jythonParser.ArrParramContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArrParram(jythonParser.ArrParramContext ctx) { }
+	@Override public void exitParameter(jythonParser.ParameterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
