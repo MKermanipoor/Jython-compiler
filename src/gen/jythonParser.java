@@ -1957,31 +1957,153 @@ public class jythonParser extends Parser {
 	}
 
 	public static class LeftExpContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(jythonParser.ID, 0); }
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public ArgsContext args() {
-			return getRuleContext(ArgsContext.class,0);
-		}
-		public LeftExpContext leftExp() {
-			return getRuleContext(LeftExpContext.class,0);
-		}
 		public LeftExpContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_leftExp; }
+
+		public LeftExpContext() { }
+		public void copyFrom(LeftExpContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class LeftExp_prantessContext extends LeftExpContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public LeftExp_prantessContext(LeftExpContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof jythonListener) ((jythonListener)listener).enterLeftExp(this);
+			if ( listener instanceof jythonListener) ((jythonListener)listener).enterLeftExp_prantess(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof jythonListener) ((jythonListener)listener).exitLeftExp(this);
+			if ( listener instanceof jythonListener) ((jythonListener)listener).exitLeftExp_prantess(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof jythonVisitor) return ((jythonVisitor<? extends T>)visitor).visitLeftExp(this);
+			if ( visitor instanceof jythonVisitor) return ((jythonVisitor<? extends T>)visitor).visitLeftExp_prantess(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class LeftExp_arrayIndexContext extends LeftExpContext {
+		public LeftExpContext leftExp() {
+			return getRuleContext(LeftExpContext.class,0);
+		}
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public LeftExp_arrayIndexContext(LeftExpContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof jythonListener) ((jythonListener)listener).enterLeftExp_arrayIndex(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof jythonListener) ((jythonListener)listener).exitLeftExp_arrayIndex(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof jythonVisitor) return ((jythonVisitor<? extends T>)visitor).visitLeftExp_arrayIndex(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class LeftExp_selfContext extends LeftExpContext {
+		public LeftExpContext leftExp() {
+			return getRuleContext(LeftExpContext.class,0);
+		}
+		public LeftExp_selfContext(LeftExpContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof jythonListener) ((jythonListener)listener).enterLeftExp_self(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof jythonListener) ((jythonListener)listener).exitLeftExp_self(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof jythonVisitor) return ((jythonVisitor<? extends T>)visitor).visitLeftExp_self(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class LeftExp_subMethodCallContext extends LeftExpContext {
+		public LeftExpContext leftExp() {
+			return getRuleContext(LeftExpContext.class,0);
+		}
+		public TerminalNode ID() { return getToken(jythonParser.ID, 0); }
+		public ArgsContext args() {
+			return getRuleContext(ArgsContext.class,0);
+		}
+		public LeftExp_subMethodCallContext(LeftExpContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof jythonListener) ((jythonListener)listener).enterLeftExp_subMethodCall(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof jythonListener) ((jythonListener)listener).exitLeftExp_subMethodCall(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof jythonVisitor) return ((jythonVisitor<? extends T>)visitor).visitLeftExp_subMethodCall(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class LeftExp_methodCallContext extends LeftExpContext {
+		public TerminalNode ID() { return getToken(jythonParser.ID, 0); }
+		public ArgsContext args() {
+			return getRuleContext(ArgsContext.class,0);
+		}
+		public LeftExp_methodCallContext(LeftExpContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof jythonListener) ((jythonListener)listener).enterLeftExp_methodCall(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof jythonListener) ((jythonListener)listener).exitLeftExp_methodCall(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof jythonVisitor) return ((jythonVisitor<? extends T>)visitor).visitLeftExp_methodCall(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class LeftExp_varNameContext extends LeftExpContext {
+		public TerminalNode ID() { return getToken(jythonParser.ID, 0); }
+		public LeftExp_varNameContext(LeftExpContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof jythonListener) ((jythonListener)listener).enterLeftExp_varName(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof jythonListener) ((jythonListener)listener).exitLeftExp_varName(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof jythonVisitor) return ((jythonVisitor<? extends T>)visitor).visitLeftExp_varName(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class LeftExp_subVarNameContext extends LeftExpContext {
+		public LeftExpContext leftExp() {
+			return getRuleContext(LeftExpContext.class,0);
+		}
+		public TerminalNode ID() { return getToken(jythonParser.ID, 0); }
+		public LeftExp_subVarNameContext(LeftExpContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof jythonListener) ((jythonListener)listener).enterLeftExp_subVarName(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof jythonListener) ((jythonListener)listener).exitLeftExp_subVarName(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof jythonVisitor) return ((jythonVisitor<? extends T>)visitor).visitLeftExp_subVarName(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2006,12 +2128,19 @@ public class jythonParser extends Parser {
 			switch ( getInterpreter().adaptivePredict(_input,30,_ctx) ) {
 			case 1:
 				{
+				_localctx = new LeftExp_varNameContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+
 				setState(351);
 				match(ID);
 				}
 				break;
 			case 2:
 				{
+				_localctx = new LeftExp_prantessContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(352);
 				match(T__2);
 				setState(353);
@@ -2022,6 +2151,9 @@ public class jythonParser extends Parser {
 				break;
 			case 3:
 				{
+				_localctx = new LeftExp_methodCallContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(356);
 				match(ID);
 				setState(357);
@@ -2030,6 +2162,9 @@ public class jythonParser extends Parser {
 				break;
 			case 4:
 				{
+				_localctx = new LeftExp_selfContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
 				setState(358);
 				match(T__22);
 				setState(359);
@@ -2053,7 +2188,7 @@ public class jythonParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,31,_ctx) ) {
 					case 1:
 						{
-						_localctx = new LeftExpContext(_parentctx, _parentState);
+						_localctx = new LeftExp_arrayIndexContext(new LeftExpContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_leftExp);
 						setState(363);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
@@ -2067,7 +2202,7 @@ public class jythonParser extends Parser {
 						break;
 					case 2:
 						{
-						_localctx = new LeftExpContext(_parentctx, _parentState);
+						_localctx = new LeftExp_subVarNameContext(new LeftExpContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_leftExp);
 						setState(368);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
@@ -2079,7 +2214,7 @@ public class jythonParser extends Parser {
 						break;
 					case 3:
 						{
-						_localctx = new LeftExpContext(_parentctx, _parentState);
+						_localctx = new LeftExp_subMethodCallContext(new LeftExpContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_leftExp);
 						setState(371);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");

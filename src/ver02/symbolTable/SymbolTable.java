@@ -27,20 +27,22 @@ public class SymbolTable {
         return parent;
     }
 
-
+    public SymbolTable getChild(String key){
+        return childs.get(key);
+    }
     //************************ class part ************************
     private void checkClassTable() {
         if (classTable == null)
             classTable = new SubClassSymbolTable(this);
     }
 
-    public void addClassEntity(String className, int lineDefinition) {
+    public void addClassEntity(String className, int lineDefinition, String classHash) {
         checkClassTable();
 
-        classTable.addClass(className, lineDefinition);
+        classTable.addClass(className, lineDefinition, classHash);
     }
 
-    public void addClassEntity(String className, int lineDefinition, String supperCalssName) {
+    public void addClassEntity(String className, int lineDefinition, String classHash, String supperCalssName) {
         checkClassTable();
 
         // TODO Masoud 6/7/2019: (Logic) complete
@@ -60,34 +62,46 @@ public class SymbolTable {
     }
 
     //************************ var part ************************
-    private void checkVarTable(){
+    private void checkVarTable() {
         if (varTable != null)
             return;
 
         varTable = new SubVarSymbolTable(this);
     }
 
-    public void addVarEntity(String varName, VarType varType, int lineDefinition){
+    public void addVarEntity(String varName, VarType varType, int lineDefinition, boolean isArray) {
         checkVarTable();
-        varTable.addVariable(varName, varType, lineDefinition);
+        if (isArray)
+            varTable.addArrayVatiable(varName, varType, lineDefinition);
+        else
+            varTable.addVariable(varName, varType, lineDefinition);
     }
 
-    public void addVarEntity(String varName, String className, int lineDefinition){
+    public void addVarEntity(String varName, String className, int lineDefinition, boolean isArray) {
         checkVarTable();
-        varTable.addVariable(varName, className, lineDefinition);
+        if (isArray)
+            varTable.addArrayVatiable(varName, className, lineDefinition);
+        else
+            varTable.addVariable(varName, className, lineDefinition);
     }
 
-    public void addAttributeEntity(String varName, VarType varType, int lineDefinition){
+    public void addAttributeEntity(String varName, VarType varType, int lineDefinition, boolean isArray) {
         checkVarTable();
-        varTable.addAttribute(varName, varType, lineDefinition);
+        if (isArray)
+            varTable.addArrayAttribute(varName, varType, lineDefinition);
+        else
+            varTable.addAttribute(varName, varType, lineDefinition);
     }
 
-    public void addAttributeEntity(String varName, String className, int lineDefinition){
+    public void addAttributeEntity(String varName, String className, int lineDefinition, boolean isArray) {
         checkVarTable();
-        varTable.addAttribute(varName, className, lineDefinition);
+        if (isArray)
+            varTable.addArrayAttribute(varName, className, lineDefinition);
+        else
+            varTable.addAttribute(varName, className, lineDefinition);
     }
 
-    public SubVarSymbolTable.VarEntity findVar(String varName){
+    public SubVarSymbolTable.VarEntity findVar(String varName) {
         SubVarSymbolTable.VarEntity result;
         if (varTable == null)
             result = null;

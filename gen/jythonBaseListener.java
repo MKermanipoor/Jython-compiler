@@ -267,13 +267,85 @@ public class jythonBaseListener implements jythonListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLeftExp(jythonParser.LeftExpContext ctx) { }
+	@Override public void enterLeftExp_prantess(jythonParser.LeftExp_prantessContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLeftExp(jythonParser.LeftExpContext ctx) { }
+	@Override public void exitLeftExp_prantess(jythonParser.LeftExp_prantessContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLeftExp_arrayIndex(jythonParser.LeftExp_arrayIndexContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLeftExp_arrayIndex(jythonParser.LeftExp_arrayIndexContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLeftExp_self(jythonParser.LeftExp_selfContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLeftExp_self(jythonParser.LeftExp_selfContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLeftExp_subMethodCall(jythonParser.LeftExp_subMethodCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLeftExp_subMethodCall(jythonParser.LeftExp_subMethodCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLeftExp_methodCall(jythonParser.LeftExp_methodCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLeftExp_methodCall(jythonParser.LeftExp_methodCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLeftExp_varName(jythonParser.LeftExp_varNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLeftExp_varName(jythonParser.LeftExp_varNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLeftExp_subVarName(jythonParser.LeftExp_subVarNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLeftExp_subVarName(jythonParser.LeftExp_subVarNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

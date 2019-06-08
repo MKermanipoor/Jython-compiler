@@ -217,15 +217,89 @@ public interface jythonListener extends ParseTreeListener {
 	 */
 	void exitRightExp(jythonParser.RightExpContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link jythonParser#leftExp}.
+	 * Enter a parse tree produced by the {@code leftExp_prantess}
+	 * labeled alternative in {@link jythonParser#leftExp}.
 	 * @param ctx the parse tree
 	 */
-	void enterLeftExp(jythonParser.LeftExpContext ctx);
+	void enterLeftExp_prantess(jythonParser.LeftExp_prantessContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link jythonParser#leftExp}.
+	 * Exit a parse tree produced by the {@code leftExp_prantess}
+	 * labeled alternative in {@link jythonParser#leftExp}.
 	 * @param ctx the parse tree
 	 */
-	void exitLeftExp(jythonParser.LeftExpContext ctx);
+	void exitLeftExp_prantess(jythonParser.LeftExp_prantessContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code leftExp_arrayIndex}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterLeftExp_arrayIndex(jythonParser.LeftExp_arrayIndexContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code leftExp_arrayIndex}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitLeftExp_arrayIndex(jythonParser.LeftExp_arrayIndexContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code leftExp_self}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterLeftExp_self(jythonParser.LeftExp_selfContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code leftExp_self}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitLeftExp_self(jythonParser.LeftExp_selfContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code leftExp_subMethodCall}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterLeftExp_subMethodCall(jythonParser.LeftExp_subMethodCallContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code leftExp_subMethodCall}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitLeftExp_subMethodCall(jythonParser.LeftExp_subMethodCallContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code leftExp_methodCall}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterLeftExp_methodCall(jythonParser.LeftExp_methodCallContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code leftExp_methodCall}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitLeftExp_methodCall(jythonParser.LeftExp_methodCallContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code leftExp_varName}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterLeftExp_varName(jythonParser.LeftExp_varNameContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code leftExp_varName}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitLeftExp_varName(jythonParser.LeftExp_varNameContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code leftExp_subVarName}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterLeftExp_subVarName(jythonParser.LeftExp_subVarNameContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code leftExp_subVarName}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitLeftExp_subVarName(jythonParser.LeftExp_subVarNameContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link jythonParser#args}.
 	 * @param ctx the parse tree

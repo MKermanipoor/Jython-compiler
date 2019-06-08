@@ -6,15 +6,19 @@ import ver02.errorHandler.ErrorHandler;
 import ver02.symbolTable.SymbolTable;
 
 import java.util.HashSet;
+import java.util.Stack;
 
 public class MainListener extends jythonBaseListener {
     final String fileName;
     final ErrorHandler errorHandler;
     final SymbolTable masterSymbolTable;
+    String className;
 
     private boolean inMethod = false;
 
     SymbolTable symbolTable;
+    Stack<SymbolTable> stack = new Stack<>();
+
     HashSet<String> importClass = new HashSet<>();
 
     public MainListener(String fileName, ErrorHandler errorHandler, SymbolTable masterSymbolTable) {
@@ -31,8 +35,12 @@ public class MainListener extends jythonBaseListener {
 
     @Override
     public void enterClassDec(jythonParser.ClassDecContext ctx) {
-        String className = ctx.USER_TYPE(0).getText();
-        symbolTable = symbolTable.createChild(fileName+className);
+        className = ctx.USER_TYPE(0).getText();
+        symbolTable = symbolTable.createChild(getClassHash());
+    }
+
+    String getClassHash(){
+        return fileName+className;
     }
 
     @Override
@@ -85,4 +93,17 @@ public class MainListener extends jythonBaseListener {
     public void exitIf_else_statment(jythonParser.If_else_statmentContext ctx) {
         symbolTable = symbolTable.getParent();
     }
+
+    @Override
+    public void enterLeftExp_self(jythonParser.LeftExp_selfContext ctx) {
+        stack.push(symbolTable);
+        symbolTable = masterSymbolTable.getChild(getClassHash());
+    }
+
+    @Override
+    public void exitLeftExp_self(jythonParser.LeftExp_selfContext ctx) {
+        symbolTable = stack.pop();
+    }
+
+
 }

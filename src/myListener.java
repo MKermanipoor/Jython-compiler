@@ -281,17 +281,19 @@ public class myListener extends jythonBaseListener {
         lineOrder = false;
     }
 
-    @Override
-    public void exitLeftExp(jythonParser.LeftExpContext ctx) {
-        if (ctx.getChildCount() == 1 && ctx.ID() != null) {
-            String name = ctx.ID().getText();
-            SymbolTableEntity symbolTableEntity = symbolTable.getSymbolTableEntity(name);
-            if (!(symbolTableEntity instanceof SymbolTableVarEntity) && !(symbolTableEntity instanceof SymbolTableArrayEntity)) {
+//    @Override
+//    public void exitLeftExp(jythonParser.LeftExpContext ctx) {
+//        if (ctx.getChildCount() == 1 && ctx.ID() != null) {
+//            String name = ctx.ID().getText();
+//            SymbolTableEntity symbolTableEntity = symbolTable.getSymbolTableEntity(name);
+//            if (!(symbolTableEntity instanceof SymbolTableVarEntity) && !(symbolTableEntity instanceof SymbolTableArrayEntity)) {
+//
+//                ErrorHandler.notDefineVariable(ctx.start.getLine(), name, symbolTable);
+//            }
+//        }
+//    }
 
-                ErrorHandler.notDefineVariable(ctx.start.getLine(), name, symbolTable);
-            }
-        }
-    }
+
 
     @Override
     public void exitMethod_call(jythonParser.Method_callContext ctx) {

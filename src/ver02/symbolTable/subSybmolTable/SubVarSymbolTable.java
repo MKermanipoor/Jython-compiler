@@ -16,12 +16,28 @@ public class SubVarSymbolTable extends SubSymbolTable<SubVarSymbolTable.VarEntit
         add(varName, new VarEntity(className, lineDefinition, false));
     }
 
+    public void addArrayVatiable(String arrayName, VarEntity.VarType varType, int lineDefinition){
+        add(arrayName, VarEntity.arrInstance(varType, lineDefinition, false));
+    }
+
+    public void addArrayVatiable(String arrayName, String className, int lineDefinition){
+        add(arrayName, VarEntity.arrInstance(className, lineDefinition, false));
+    }
+
     public void addAttribute(String varName, VarEntity.VarType varType, int lineDefinition) {
         add(varName, new VarEntity(varType, lineDefinition, true));
     }
 
     public void addAttribute(String varName, String className, int lineDefinition) {
         add(varName, new VarEntity(className, lineDefinition, true));
+    }
+
+    public void addArrayAttribute(String arrayName, VarEntity.VarType varType, int lineDefinition){
+        add(arrayName, VarEntity.arrInstance(varType, lineDefinition, true));
+    }
+
+    public void addArrayAttribute(String arrayName, String className, int lineDefinition){
+        add(arrayName, VarEntity.arrInstance(className, lineDefinition, true));
     }
 
     public static class VarEntity {
@@ -47,17 +63,33 @@ public class SubVarSymbolTable extends SubSymbolTable<SubVarSymbolTable.VarEntit
         private final VarType varType;
         private final int lineDefinition;
         private final boolean attribute;
+        private final boolean array;
         private String className;
 
         public VarEntity(VarType varType, int lineDefinition, boolean attribute) {
-            this.varType = varType;
-            this.lineDefinition = lineDefinition;
-            this.attribute = attribute;
+            this(varType, lineDefinition, attribute, false);
         }
 
         public VarEntity(String className, int lineDefinition, boolean attribute) {
-            this(VarType.OBJECT, lineDefinition, attribute);
+            this(VarType.OBJECT, lineDefinition, attribute, false);
             this.className = className;
+        }
+
+        public static VarEntity arrInstance(VarType varType, int lineDefinition, boolean attribute){
+            return new VarEntity(varType, lineDefinition, attribute, true);
+        }
+
+        public static VarEntity arrInstance(String className, int lineDefinition, boolean attribute){
+            VarEntity temp = new VarEntity(VarType.OBJECT, lineDefinition, attribute, true);
+            temp.className = className;
+            return temp;
+        }
+
+        private VarEntity(VarType varType, int lineDefinition, boolean attribute, boolean array) {
+            this.varType = varType;
+            this.lineDefinition = lineDefinition;
+            this.attribute = attribute;
+            this.array = array;
         }
 
         public VarType getVarType() {
@@ -74,6 +106,10 @@ public class SubVarSymbolTable extends SubSymbolTable<SubVarSymbolTable.VarEntit
 
         public String getClassName() {
             return className;
+        }
+
+        public boolean isArray() {
+            return array;
         }
     }
 }

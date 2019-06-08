@@ -136,11 +136,54 @@ public interface jythonVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRightExp(jythonParser.RightExpContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link jythonParser#leftExp}.
+	 * Visit a parse tree produced by the {@code leftExp_prantess}
+	 * labeled alternative in {@link jythonParser#leftExp}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLeftExp(jythonParser.LeftExpContext ctx);
+	T visitLeftExp_prantess(jythonParser.LeftExp_prantessContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code leftExp_arrayIndex}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLeftExp_arrayIndex(jythonParser.LeftExp_arrayIndexContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code leftExp_self}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLeftExp_self(jythonParser.LeftExp_selfContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code leftExp_subMethodCall}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLeftExp_subMethodCall(jythonParser.LeftExp_subMethodCallContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code leftExp_methodCall}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLeftExp_methodCall(jythonParser.LeftExp_methodCallContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code leftExp_varName}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLeftExp_varName(jythonParser.LeftExp_varNameContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code leftExp_subVarName}
+	 * labeled alternative in {@link jythonParser#leftExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLeftExp_subVarName(jythonParser.LeftExp_subVarNameContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link jythonParser#args}.
 	 * @param ctx the parse tree

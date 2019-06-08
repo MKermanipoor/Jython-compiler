@@ -30,7 +30,7 @@ public class FillSymbolTableListener extends MainListener {
         if (masterSymbolTable.findClass(className) != null) {
             errorHandler.doubleDefineClass(className, line);
         } else {
-            symbolTable.addClassEntity(className, line);
+            symbolTable.addClassEntity(className, line, getClassHash());
         }
 
         super.enterClassDec(ctx);
@@ -42,6 +42,7 @@ public class FillSymbolTableListener extends MainListener {
         int line = ctx.start.getLine();
 
         SubVarSymbolTable.VarEntity varEntity = symbolTable.findVar(name);
+        // TODO Masoud 6/8/2019: (Logic) create array instance of now class
 
         if (isInMethod()) {
             if (varEntity != null && !varEntity.isAttribute()) {
@@ -60,10 +61,10 @@ public class FillSymbolTableListener extends MainListener {
                     errorHandler.notFindClass(className, line);
                     return;
                 }
-                symbolTable.addVarEntity(name, className, line);
+                symbolTable.addVarEntity(name, className, line, false);
             } else {
                 SubVarSymbolTable.VarEntity.VarType type = SubVarSymbolTable.VarEntity.VarType.get(ctx.type().jythonType().getText());
-                symbolTable.addVarEntity(name, type, line);
+                symbolTable.addVarEntity(name, type, line, false);
             }
 
         } else {
@@ -83,10 +84,10 @@ public class FillSymbolTableListener extends MainListener {
                     errorHandler.notFindClass(className, line);
                     return;
                 }
-                symbolTable.addAttributeEntity(name, className, line);
+                symbolTable.addAttributeEntity(name, className, line, false);
             } else {
                 SubVarSymbolTable.VarEntity.VarType type = SubVarSymbolTable.VarEntity.VarType.get(ctx.type().jythonType().getText());
-                symbolTable.addAttributeEntity(name, type, line);
+                symbolTable.addAttributeEntity(name, type, line, false);
             }
 
         }
@@ -94,9 +95,58 @@ public class FillSymbolTableListener extends MainListener {
     }
 
     @Override
-    public void enterMethodDec(jythonParser.MethodDecContext ctx) {
-        super.enterMethodDec(ctx);
+    public void exitArrayDec(jythonParser.ArrayDecContext ctx) {
+        String name = ctx.ID().toString();
+        int line = ctx.start.getLine();
 
+        SubVarSymbolTable.VarEntity varEntity = symbolTable.findVar(name);
+        // TODO Masoud 6/8/2019: (Logic) create array instance of now class
+        if (isInMethod()) {
+            if (varEntity != null && !varEntity.isAttribute()) {
+                errorHandler.doubleDefineVarriable(name, line);
+                if (ctx.type().jythonType() == null){
+                    String className = ctx.type().USER_TYPE().toString();
+                    if (!importClass.contains(className))
+                        errorHandler.notFindClass(className, line);
+                }
+                return;
+            }
 
+            if (ctx.type().jythonType() == null) {
+                String className = ctx.type().USER_TYPE().toString();
+                if (!importClass.contains(className)) {
+                    errorHandler.notFindClass(className, line);
+                    return;
+                }
+                symbolTable.addVarEntity(name, className, line, true);
+            } else {
+                SubVarSymbolTable.VarEntity.VarType type = SubVarSymbolTable.VarEntity.VarType.get(ctx.type().jythonType().getText());
+                symbolTable.addVarEntity(name, type, line, true);
+            }
+
+        } else {
+            if (varEntity != null) {
+                errorHandler.doubleDefineVarriable(name, line);
+                if (ctx.type().jythonType() == null){
+                    String className = ctx.type().USER_TYPE().toString();
+                    if (!importClass.contains(className))
+                        errorHandler.notFindClass(className, line);
+                }
+                return;
+            }
+
+            if (ctx.type().jythonType() == null) {
+                String className = ctx.type().USER_TYPE().toString();
+                if (!importClass.contains(className)) {
+                    errorHandler.notFindClass(className, line);
+                    return;
+                }
+                symbolTable.addAttributeEntity(name, className, line, true);
+            } else {
+                SubVarSymbolTable.VarEntity.VarType type = SubVarSymbolTable.VarEntity.VarType.get(ctx.type().jythonType().getText());
+                symbolTable.addAttributeEntity(name, type, line, true);
+            }
+
+        }
     }
 }

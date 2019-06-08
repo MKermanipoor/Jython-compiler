@@ -83,13 +83,13 @@ rightExp :
             | leftExp
             ;
 
-leftExp :    ID
-          |  '(' expression')'
-          |  ID args
-          |  leftExp '[' expression ']'
-          |  leftExp '.' ID
-          |  leftExp '.' ID args
-          |  'self' '.' leftExp  ;
+leftExp :    ID                                 #leftExp_varName
+          |  '(' expression')'                  #leftExp_prantess
+          |  ID args                            #leftExp_methodCall
+          |  leftExp '[' expression ']'         #leftExp_arrayIndex
+          |  leftExp '.' ID                     #leftExp_subVarName
+          |  leftExp '.' ID args                #leftExp_subMethodCall
+          |  'self' '.' leftExp                 #leftExp_self;
 
 args :  '(' (explist)? ')' ;
 explist  :  expression (',' expression)*;

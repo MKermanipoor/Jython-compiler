@@ -1,11 +1,11 @@
-import Test1
-import Test1
 import Compiler2
 
 class Compiler{
-int a
-def int rizz(){
-int a
+
+Compiler2 [2] b
+def int rizz(int [10] a){
+int b
+b = a
 }
 def int saeid(){
 }

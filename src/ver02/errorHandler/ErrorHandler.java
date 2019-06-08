@@ -25,9 +25,18 @@ public class ErrorHandler {
         errorTable.get(nowFileName).add(new DoubleVarDefine(variableName, line));
     }
 
+
+
+
     public void notFindClass(String className, int line){
         errorTable.get(nowFileName).add(new NotDefineClass(className, line));
     }
+
+    public void notFindVar(String varName, int line){
+        errorTable.get(nowFileName).add(new NotDefineVar(varName, line));
+    }
+
+
 
     public void checkAndPrintAll() {
         errorTable.forEach((fileName, errors) -> {
