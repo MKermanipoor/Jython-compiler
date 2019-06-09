@@ -2,10 +2,9 @@ import Compiler2
 
 class Compiler{
 
-Compiler2 [2] b
+Compiler2 b
 def int rizz(int [10] a){
-int b
-b = a
+b.c.v.c.b.c = b.c
 }
 def int saeid(){
 }

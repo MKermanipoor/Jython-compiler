@@ -1,16 +1,9 @@
 import Test2
+import Compiler
+
 class Compiler2{
+Compiler c
 def void riz(int ss){
-int[22] array = int()[22]
-while(ss>bb){
-print("HELLO")
-}
-if(bb<ss){
-print("bbSS")
-}
-
-
 
 }
-
 }

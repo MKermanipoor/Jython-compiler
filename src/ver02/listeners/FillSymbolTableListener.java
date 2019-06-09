@@ -30,7 +30,7 @@ public class FillSymbolTableListener extends MainListener {
         if (masterSymbolTable.findClass(className) != null) {
             errorHandler.doubleDefineClass(className, line);
         } else {
-            symbolTable.addClassEntity(className, line, getClassHash());
+            symbolTable.addClassEntity(className, line, getClassHash(className));
         }
 
         super.enterClassDec(ctx);
