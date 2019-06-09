@@ -47,9 +47,9 @@ public class FillSymbolTableListener extends MainListener {
         if (isInMethod()) {
             if (varEntity != null && !varEntity.isAttribute()) {
                 errorHandler.doubleDefineVarriable(name, line);
-                if (ctx.type().jythonType() == null){
+                if (ctx.type().jythonType() == null) {
                     String className = ctx.type().USER_TYPE().toString();
-                    if (!importClass.contains(className))
+                    if (!importClass.contains(className) && !className.equals(this.className))
                         errorHandler.notFindClass(className, line);
                 }
                 return;
@@ -57,7 +57,7 @@ public class FillSymbolTableListener extends MainListener {
 
             if (ctx.type().jythonType() == null) {
                 String className = ctx.type().USER_TYPE().toString();
-                if (!importClass.contains(className)) {
+                if (!importClass.contains(className) && !className.equals(this.className)) {
                     errorHandler.notFindClass(className, line);
                     return;
                 }
@@ -70,9 +70,9 @@ public class FillSymbolTableListener extends MainListener {
         } else {
             if (varEntity != null) {
                 errorHandler.doubleDefineVarriable(name, line);
-                if (ctx.type().jythonType() == null){
+                if (ctx.type().jythonType() == null) {
                     String className = ctx.type().USER_TYPE().toString();
-                    if (!importClass.contains(className))
+                    if (!importClass.contains(className) && !className.equals(this.className))
                         errorHandler.notFindClass(className, line);
                 }
                 return;
@@ -80,7 +80,7 @@ public class FillSymbolTableListener extends MainListener {
 
             if (ctx.type().jythonType() == null) {
                 String className = ctx.type().USER_TYPE().toString();
-                if (!importClass.contains(className)) {
+                if (!importClass.contains(className) && !className.equals(this.className)) {
                     errorHandler.notFindClass(className, line);
                     return;
                 }
@@ -104,9 +104,9 @@ public class FillSymbolTableListener extends MainListener {
         if (isInMethod()) {
             if (varEntity != null && !varEntity.isAttribute()) {
                 errorHandler.doubleDefineVarriable(name, line);
-                if (ctx.type().jythonType() == null){
+                if (ctx.type().jythonType() == null) {
                     String className = ctx.type().USER_TYPE().toString();
-                    if (!importClass.contains(className))
+                    if (!importClass.contains(className) && !className.equals(this.className))
                         errorHandler.notFindClass(className, line);
                 }
                 return;
@@ -114,7 +114,7 @@ public class FillSymbolTableListener extends MainListener {
 
             if (ctx.type().jythonType() == null) {
                 String className = ctx.type().USER_TYPE().toString();
-                if (!importClass.contains(className)) {
+                if (!importClass.contains(className) && !className.equals(this.className)) {
                     errorHandler.notFindClass(className, line);
                     return;
                 }
@@ -127,9 +127,9 @@ public class FillSymbolTableListener extends MainListener {
         } else {
             if (varEntity != null) {
                 errorHandler.doubleDefineVarriable(name, line);
-                if (ctx.type().jythonType() == null){
+                if (ctx.type().jythonType() == null) {
                     String className = ctx.type().USER_TYPE().toString();
-                    if (!importClass.contains(className))
+                    if (!importClass.contains(className) && !className.equals(this.className))
                         errorHandler.notFindClass(className, line);
                 }
                 return;
@@ -137,7 +137,7 @@ public class FillSymbolTableListener extends MainListener {
 
             if (ctx.type().jythonType() == null) {
                 String className = ctx.type().USER_TYPE().toString();
-                if (!importClass.contains(className)) {
+                if (!importClass.contains(className) && !className.equals(this.className)) {
                     errorHandler.notFindClass(className, line);
                     return;
                 }
