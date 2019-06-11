@@ -1,9 +1,11 @@
 package ver02.symbolTable;
 
 import ver02.symbolTable.subSybmolTable.SubClassSymbolTable;
+import ver02.symbolTable.subSybmolTable.SubMethodSymbolTable;
 import ver02.symbolTable.subSybmolTable.SubVarSymbolTable;
 import ver02.symbolTable.subSybmolTable.SubVarSymbolTable.VarEntity.VarType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SymbolTable {
@@ -12,6 +14,7 @@ public class SymbolTable {
 
     private SubClassSymbolTable classTable = null;
     private SubVarSymbolTable varTable = null;
+    private SubMethodSymbolTable methodTable = null;
 
     public SymbolTable createChild(String key) {
         if (childs.containsKey(key))
@@ -27,9 +30,10 @@ public class SymbolTable {
         return parent;
     }
 
-    public SymbolTable getChild(String key){
+    public SymbolTable getChild(String key) {
         return childs.get(key);
     }
+
     //************************ class part ************************
     private void checkClassTable() {
         if (classTable == null)
@@ -112,6 +116,29 @@ public class SymbolTable {
             return parent.findVar(varName);
 
         return result;
+    }
+
+
+    //************************ method ************************
+    private void checkMethodTable() {
+        if (methodTable == null)
+            methodTable = new SubMethodSymbolTable(this);
+    }
+
+    public void addMethod(String methodName, SubMethodSymbolTable.MethodEntity.ReturnType returnType, String className, boolean arrayReturn, ArrayList<SubMethodSymbolTable.MethodEntity.InputInfo> inputType, int lineDefinition) {
+        checkMethodTable();
+        methodTable.addMethodEntity(methodName, returnType, arrayReturn, className, inputType, lineDefinition);
+    }
+
+    public ArrayList<SubMethodSymbolTable.MethodEntity> findMethod(String methodName) {
+        ArrayList<SubMethodSymbolTable.MethodEntity> result = new ArrayList<>();
+        methodTable.getMethodNameToEntity(methodName).forEach((hashcode) -> result.add(methodTable.getEntity(hashcode)));
+        return result;
+    }
+
+    public SubMethodSymbolTable.MethodEntity findMethodByHash (String hash){
+        checkMethodTable();
+        return methodTable.getEntity(hash);
     }
 
     @Override

@@ -6,7 +6,9 @@ Compiler2 b
 Compiler2 c
 
 def int rizz(int [10] a){
-b.c.b.c.b.c = c.c.c.c.c.c
+    b.c = b.c.b.c
+}
+def void saeid(){
 }
 def int saeid(){
 }

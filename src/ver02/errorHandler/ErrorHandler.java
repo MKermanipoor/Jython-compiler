@@ -25,6 +25,10 @@ public class ErrorHandler {
         errorTable.get(nowFileName).add(new DoubleVarDefine(variableName, line));
     }
 
+    public void doubleDefineMethod(String methodName, int line){
+        errorTable.get(nowFileName).add(new DoubleMethodDefine(methodName, line));
+    }
+
 
 
 
