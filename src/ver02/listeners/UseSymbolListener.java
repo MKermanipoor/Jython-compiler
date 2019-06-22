@@ -107,6 +107,15 @@ public class UseSymbolListener extends MainListener {
     }
 
     @Override
+    public void exitPrint_statment(jythonParser.Print_statmentContext ctx) {
+        int line = ctx.start.getLine();
+        if (tempExpresionInfo.isEmpty() || tempExpresionInfo.pop().expresionType == ExpresionInfo.ExpresionType.OBJECT){
+            errorHandler.printError(line);
+        }
+        tempExpresionInfo.clear();
+    }
+
+    @Override
     public void enterImportclass(jythonParser.ImportclassContext ctx) {
         String className = ctx.USER_TYPE().getText();
         int line = ctx.start.getLine();

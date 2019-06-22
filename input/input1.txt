@@ -6,6 +6,7 @@ int c
 
 def int rizz(){
     while (t){
+    print(c)
     }
     }
 }

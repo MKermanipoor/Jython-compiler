@@ -14,48 +14,55 @@ public class ErrorHandler {
     }
 
     public void doubleImportClass(String className, int line) {
-        errorTable.get(nowFileName).add(new DoubleImporrtClass(className, line));
+        addError(new DoubleImporrtClass(className, line));
     }
 
     public void doubleDefineClass(String className, int line) {
-        errorTable.get(nowFileName).add(new DoubleClassDefine(className, line));
+        addError(new DoubleClassDefine(className, line));
     }
 
     public void doubleDefineVarriable(String variableName, int line){
-        errorTable.get(nowFileName).add(new DoubleVarDefine(variableName, line));
+        addError(new DoubleVarDefine(variableName, line));
     }
 
     public void doubleDefineMethod(String methodName, int line){
-        errorTable.get(nowFileName).add(new DoubleMethodDefine(methodName, line));
+        addError(new DoubleMethodDefine(methodName, line));
     }
 
 
 
 
     public void notFindClass(String className, int line){
-        errorTable.get(nowFileName).add(new NotDefineClass(className, line));
+        addError(new NotDefineClass(className, line));
     }
 
     public void notFindVar(String varName, int line){
-        errorTable.get(nowFileName).add(new NotDefineVar(varName, line));
+        addError(new NotDefineVar(varName, line));
     }
 
     public void notFindMethod(String methodName, int line){
-        errorTable.get(nowFileName).add(new NotDefineMethod(methodName, line));
+        addError(new NotDefineMethod(methodName, line));
     }
 
     public void notDefineOperation(int line){
-        errorTable.get(nowFileName).add(new NotDefineOperation(line));
+        addError(new NotDefineOperation(line));
     }
 
     public void contConvert(String leftType, String rightType, int line){
-        errorTable.get(nowFileName).add(new NotConvert(leftType, rightType, line));
+        addError(new NotConvert(leftType, rightType, line));
     }
 
     public void conditionError(int line){
-        errorTable.get(nowFileName).add(new ConditionNotBolean(line));
+        addError(new ConditionNotBolean(line));
     }
 
+    public void printError(int line){
+        addError(new PrintError(line));
+    }
+
+    private void addError(Error error){
+        errorTable.get(nowFileName).add(error);
+    }
 
     public void checkAndPrintAll() {
         errorTable.forEach((fileName, errors) -> {
