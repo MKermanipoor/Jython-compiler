@@ -21,7 +21,7 @@ public class Main {
         ErrorHandler errorHandler = new ErrorHandler();
 
         File rootPath = new File("input\\");
-        File[] fileList = rootPath.listFiles((dir, name) -> name.endsWith(".txt"));
+        File[] fileList = rootPath.listFiles((dir, name) -> name.endsWith("input1.txt"));
         for (File file : fileList) {
             FileInputStream fileInputStream = new FileInputStream(file);
             // create a CharStream that reads from standard input

@@ -171,6 +171,18 @@ public class jythonBaseListener implements jythonListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBoolean_expression(jythonParser.Boolean_expressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBoolean_expression(jythonParser.Boolean_expressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterWhile_statment(jythonParser.While_statmentContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -137,6 +137,16 @@ public interface jythonListener extends ParseTreeListener {
 	 */
 	void exitCondition_list(jythonParser.Condition_listContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link jythonParser#boolean_expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoolean_expression(jythonParser.Boolean_expressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link jythonParser#boolean_expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoolean_expression(jythonParser.Boolean_expressionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link jythonParser#while_statment}.
 	 * @param ctx the parse tree
 	 */

@@ -28,6 +28,10 @@ public class MainListener extends jythonBaseListener {
         this.symbolTable = this.masterSymbolTable;
     }
 
+    boolean findClassName(String className){
+        return className.equals(this.className) || importClass.contains(className);
+    }
+
     public boolean isInMethod() {
         return inMethod;
     }

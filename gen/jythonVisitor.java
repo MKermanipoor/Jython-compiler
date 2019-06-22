@@ -88,6 +88,12 @@ public interface jythonVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCondition_list(jythonParser.Condition_listContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link jythonParser#boolean_expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolean_expression(jythonParser.Boolean_expressionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link jythonParser#while_statment}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

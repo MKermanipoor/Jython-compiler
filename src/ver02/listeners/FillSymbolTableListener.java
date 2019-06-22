@@ -12,9 +12,6 @@ import java.util.ArrayList;
 
 public class FillSymbolTableListener extends MainListener {
 
-    private boolean findClassName(String className){
-        return className.equals(this.className) || importClass.contains(className);
-    }
 
     public FillSymbolTableListener(String fileName, ErrorHandler errorHandler, SymbolTable masterSymbolTable) {
         super(fileName, errorHandler, masterSymbolTable);
@@ -51,7 +48,6 @@ public class FillSymbolTableListener extends MainListener {
         int line = ctx.start.getLine();
 
         SubVarSymbolTable.VarEntity varEntity = symbolTable.findVar(name);
-        // TODO Masoud 6/8/2019: (Logic) create array instance of now class
 
         if (isInMethod()) {
             if (varEntity != null && !varEntity.isAttribute()) {
@@ -109,7 +105,7 @@ public class FillSymbolTableListener extends MainListener {
         int line = ctx.start.getLine();
 
         SubVarSymbolTable.VarEntity varEntity = symbolTable.findVar(name);
-        // TODO Masoud 6/8/2019: (Logic) create array instance of now class
+
         if (isInMethod()) {
             if (varEntity != null && !varEntity.isAttribute()) {
                 errorHandler.doubleDefineVarriable(name, line);

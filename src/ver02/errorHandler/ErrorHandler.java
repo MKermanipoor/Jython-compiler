@@ -40,6 +40,21 @@ public class ErrorHandler {
         errorTable.get(nowFileName).add(new NotDefineVar(varName, line));
     }
 
+    public void notFindMethod(String methodName, int line){
+        errorTable.get(nowFileName).add(new NotDefineMethod(methodName, line));
+    }
+
+    public void notDefineOperation(int line){
+        errorTable.get(nowFileName).add(new NotDefineOperation(line));
+    }
+
+    public void contConvert(String leftType, String rightType, int line){
+        errorTable.get(nowFileName).add(new NotConvert(leftType, rightType, line));
+    }
+
+    public void conditionError(int line){
+        errorTable.get(nowFileName).add(new ConditionNotBolean(line));
+    }
 
 
     public void checkAndPrintAll() {

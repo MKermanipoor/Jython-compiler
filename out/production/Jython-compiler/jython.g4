@@ -40,7 +40,9 @@ statment :
 
 return_statment : 'return'  expression ;
 
-condition_list : expression (('or'|'and')  expression)* ;
+condition_list : boolean_expression (('or'|'and')  boolean_expression)* ;
+
+boolean_expression : expression;
 
 while_statment : 'while' '(' condition_list ')' '{' statment* '}' ;
 
@@ -56,7 +58,7 @@ for_statment : 'for' ID 'in' leftExp '{' statment* '}'
 
 method_call : 'self' '.' method_call
             | ID args
-            | leftExp '.' method_call;
+            | leftExp '.' ID args;
 
 assignment  : leftExp assignment_operators  expression
             | varDec assignment_operators  expression

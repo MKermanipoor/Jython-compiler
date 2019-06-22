@@ -7,6 +7,7 @@ import ver02.symbolTable.subSybmolTable.SubVarSymbolTable.VarEntity.VarType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class SymbolTable {
     private SymbolTable parent = null;
@@ -132,13 +133,33 @@ public class SymbolTable {
 
     public ArrayList<SubMethodSymbolTable.MethodEntity> findMethod(String methodName) {
         ArrayList<SubMethodSymbolTable.MethodEntity> result = new ArrayList<>();
-        methodTable.getMethodNameToEntity(methodName).forEach((hashcode) -> result.add(methodTable.getEntity(hashcode)));
+
+        if (methodTable == null && parent != null)
+            return parent.findMethod(methodName);
+
+        if (methodTable != null) {
+            HashSet<String> methodSet = methodTable.getMethodNameToEntity(methodName);
+
+            if (methodSet.isEmpty() && parent != null)
+                return parent.findMethod(methodName);
+
+            if (!methodSet.isEmpty())
+                methodSet.forEach((hashcode) -> result.add(methodTable.getEntity(hashcode)));
+        }
         return result;
     }
 
-    public SubMethodSymbolTable.MethodEntity findMethodByHash (String hash){
-        checkMethodTable();
-        return methodTable.getEntity(hash);
+    public SubMethodSymbolTable.MethodEntity findMethodByHash(String hash) {
+        SubMethodSymbolTable.MethodEntity result = null;
+
+        if (methodTable == null && parent != null)
+            return parent.findMethodByHash(hash);
+
+        if (methodTable != null){
+            result = methodTable.getEntity(hash);
+        }
+
+        return result;
     }
 
     @Override

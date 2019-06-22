@@ -1,16 +1,13 @@
 import Compiler2
 
 class Compiler{
+int b
+int c
 
-Compiler2 b
-Compiler2 c
-
-def int rizz(int [10] a){
-    b.c = b.c.b.c
-}
-def void saeid(){
-}
-def int saeid(){
+def int rizz(){
+    while (t){
+    }
+    }
 }
 }
 
