@@ -2,7 +2,10 @@ import Compiler2
 
 class Compiler{
 int b
-int c
+float c
+int[b] arr1
+int[c+b] arr3
+
 
 def int rizz(){
     while (t){

@@ -60,6 +60,10 @@ public class ErrorHandler {
         addError(new PrintError(line));
     }
 
+    public void arraySizeError(int line){
+        addError(new ArraySizeError(line));
+    }
+
     private void addError(Error error){
         errorTable.get(nowFileName).add(error);
     }

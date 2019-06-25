@@ -11,28 +11,25 @@ import java.util.Stack;
 
 public class UseSymbolListener extends MainListener {
 
-    Stack<SymbolTable> stack = new Stack<>();
-    SymbolTable tempSymbolTable = null;
+    private Stack<SymbolTable> stack = new Stack<>();
+    private SymbolTable tempSymbolTable = null;
 
 
-    ExpresionInfo rightExpresionInfo;
-    ExpresionInfo leftExpresionInfo;
-    Stack<ExpresionInfo> tempExpresionInfo = new Stack<>();
-    ArrayList<ExpresionInfo> expresionList = new ArrayList<>();
-    boolean leftExpresion = true;
-    boolean isExpresionList = false;
-    boolean correctConditionList = true;
+    private ExpresionInfo rightExpresionInfo;
+    private ExpresionInfo leftExpresionInfo;
+    private Stack<ExpresionInfo> tempExpresionInfo = new Stack<>();
+    private ArrayList<ExpresionInfo> expresionList = new ArrayList<>();
+    private boolean leftExpresion = true;
+    private boolean correctConditionList = true;
 
-    void setExpresionInfo(ExpresionInfo expresionInfo) {
-        if (isExpresionList)
-            expresionList.add(expresionInfo);
-        else if (leftExpresion)
+    private void setExpresionInfo(ExpresionInfo expresionInfo) {
+        if (leftExpresion)
             leftExpresionInfo = expresionInfo;
         else
             rightExpresionInfo = expresionInfo;
     }
 
-    ExpresionInfo getExpresionInfo() {
+    private ExpresionInfo getExpresionInfo() {
         if (leftExpresion)
             return leftExpresionInfo;
         else
@@ -42,15 +39,16 @@ public class UseSymbolListener extends MainListener {
 
     static class ExpresionInfo {
         enum ExpresionType {
-            NUM, STRING, OBJECT, BOOLEAN;
+            STRING, OBJECT, BOOLEAN, FLOAT, INT;
 
             public static ExpresionType get(SubVarSymbolTable.VarEntity.VarType varType) {
                 switch (varType) {
                     case OBJECT:
                         return OBJECT;
                     case INT:
+                        return INT;
                     case FLOAT:
-                        return NUM;
+                        return FLOAT;
                     case STRING:
                         return STRING;
                     case BOOLEAN:
@@ -73,21 +71,37 @@ public class UseSymbolListener extends MainListener {
         }
 
         ExpresionInfo div_mult_mod_add_sub(ExpresionInfo expresionInfo) {
-            if (this.expresionType == ExpresionType.NUM && expresionInfo.expresionType == ExpresionType.NUM)
-                return new ExpresionInfo(ExpresionType.NUM);
+            if (this.expresionType != ExpresionType.FLOAT && this.expresionType != ExpresionType.INT)
+                return null;
 
-            return null;
+            if (expresionInfo.expresionType != ExpresionType.FLOAT && expresionInfo.expresionType != ExpresionType.INT)
+                return null;
+
+            if (this.expresionType == ExpresionType.INT || expresionInfo.expresionType == ExpresionType.INT)
+                return new ExpresionInfo(ExpresionType.INT);
+
+            return new ExpresionInfo(ExpresionType.FLOAT);
         }
 
         ExpresionInfo equal_notEqual(ExpresionInfo expresionInfo) {
             if (this.expresionType == expresionInfo.expresionType)
                 return new ExpresionInfo(ExpresionType.BOOLEAN);
 
+            if (this.expresionType == ExpresionType.FLOAT && expresionInfo.expresionType == ExpresionType.INT)
+                return new ExpresionInfo(ExpresionType.BOOLEAN);
+            if (this.expresionType == ExpresionType.INT && expresionInfo.expresionType == ExpresionType.FLOAT)
+                return new ExpresionInfo(ExpresionType.BOOLEAN);
+
             return null;
         }
 
         ExpresionInfo relation(ExpresionInfo expresionInfo) {
-            if (this.expresionType == ExpresionType.NUM && expresionInfo.expresionType == ExpresionType.NUM)
+            if (this.expresionType == expresionInfo.expresionType)
+                return new ExpresionInfo(ExpresionType.BOOLEAN);
+
+            if (this.expresionType == ExpresionType.FLOAT && expresionInfo.expresionType == ExpresionType.INT)
+                return new ExpresionInfo(ExpresionType.BOOLEAN);
+            if (this.expresionType == ExpresionType.INT && expresionInfo.expresionType == ExpresionType.FLOAT)
                 return new ExpresionInfo(ExpresionType.BOOLEAN);
 
             return null;
@@ -95,9 +109,12 @@ public class UseSymbolListener extends MainListener {
 
         @Override
         public boolean equals(Object obj) {
-            if (obj instanceof ExpresionInfo)
-                return this.expresionType == ((ExpresionInfo) obj).expresionType;
+            if (obj instanceof ExpresionInfo) {
+                if (this.expresionType != ExpresionType.FLOAT && this.expresionType != ExpresionType.INT)
+                    return this.expresionType == ((ExpresionInfo) obj).expresionType;
 
+                return ((ExpresionInfo) obj).expresionType == ExpresionType.INT || ((ExpresionInfo) obj).expresionType == ExpresionType.FLOAT;
+            }
             return super.equals(obj);
         }
     }
@@ -180,11 +197,6 @@ public class UseSymbolListener extends MainListener {
     }
 
     @Override
-    public void enterMethod_call(jythonParser.Method_callContext ctx) {
-        isExpresionList = true;
-    }
-
-    @Override
     public void exitMethod_call(jythonParser.Method_callContext ctx) {
         if (ctx.ID() == null)
             return;
@@ -199,8 +211,6 @@ public class UseSymbolListener extends MainListener {
         } else {
             errorHandler.notFindMethod(methodName, line);
         }
-
-        isExpresionList = false;
     }
 
 
@@ -296,11 +306,11 @@ public class UseSymbolListener extends MainListener {
             if (ctx.BOOL() != null)
                 tempExpresionInfo.push(new ExpresionInfo(ExpresionInfo.ExpresionType.BOOLEAN));
             else if (ctx.INTEGER() != null)
-                tempExpresionInfo.push(new ExpresionInfo(ExpresionInfo.ExpresionType.NUM));
+                tempExpresionInfo.push(new ExpresionInfo(ExpresionInfo.ExpresionType.INT));
             else if (ctx.STRING() != null)
                 tempExpresionInfo.push(new ExpresionInfo(ExpresionInfo.ExpresionType.STRING));
             else if (ctx.FLOAT() != null)
-                tempExpresionInfo.push(new ExpresionInfo(ExpresionInfo.ExpresionType.NUM));
+                tempExpresionInfo.push(new ExpresionInfo(ExpresionInfo.ExpresionType.FLOAT));
         } else if (ctx.USER_TYPE() != null) {
             // TODO Masoud 6/12/2019: (Logic) check constructor
             String className = ctx.USER_TYPE().getText();
@@ -310,5 +320,17 @@ public class UseSymbolListener extends MainListener {
             else
                 errorHandler.notFindClass(className, line);
         }
+    }
+
+
+    @Override
+    public void exitArrayDec(jythonParser.ArrayDecContext ctx) {
+        int line = ctx.start.getLine();
+
+        if (tempExpresionInfo.isEmpty() || tempExpresionInfo.peek().expresionType != ExpresionInfo.ExpresionType.INT){
+            errorHandler.arraySizeError(line);
+        }
+
+        tempExpresionInfo.clear();
     }
 }
