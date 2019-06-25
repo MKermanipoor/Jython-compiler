@@ -4,6 +4,8 @@ import gen.jythonParser;
 import ver02.errorHandler.ErrorHandler;
 import ver02.symbolTable.SymbolTable;
 import ver02.symbolTable.subSybmolTable.SubClassSymbolTable;
+import ver02.symbolTable.subSybmolTable.SubMethodSymbolTable;
+import ver02.symbolTable.subSybmolTable.SubMethodSymbolTable.MethodEntity.InputInfo;
 import ver02.symbolTable.subSybmolTable.SubVarSymbolTable;
 
 import java.util.ArrayList;
@@ -36,89 +38,6 @@ public class UseSymbolListener extends MainListener {
             return rightExpresionInfo;
     }
 
-
-    static class ExpresionInfo {
-        enum ExpresionType {
-            STRING, OBJECT, BOOLEAN, FLOAT, INT;
-
-            public static ExpresionType get(SubVarSymbolTable.VarEntity.VarType varType) {
-                switch (varType) {
-                    case OBJECT:
-                        return OBJECT;
-                    case INT:
-                        return INT;
-                    case FLOAT:
-                        return FLOAT;
-                    case STRING:
-                        return STRING;
-                    case BOOLEAN:
-                        return BOOLEAN;
-                }
-                return null;
-            }
-        }
-
-        ExpresionType expresionType;
-        private String className = "";
-
-        ExpresionInfo(ExpresionType expresionType) {
-            this.expresionType = expresionType;
-        }
-
-        ExpresionInfo(String className) {
-            this.expresionType = ExpresionType.OBJECT;
-            this.className = className;
-        }
-
-        ExpresionInfo div_mult_mod_add_sub(ExpresionInfo expresionInfo) {
-            if (this.expresionType != ExpresionType.FLOAT && this.expresionType != ExpresionType.INT)
-                return null;
-
-            if (expresionInfo.expresionType != ExpresionType.FLOAT && expresionInfo.expresionType != ExpresionType.INT)
-                return null;
-
-            if (this.expresionType == ExpresionType.INT || expresionInfo.expresionType == ExpresionType.INT)
-                return new ExpresionInfo(ExpresionType.INT);
-
-            return new ExpresionInfo(ExpresionType.FLOAT);
-        }
-
-        ExpresionInfo equal_notEqual(ExpresionInfo expresionInfo) {
-            if (this.expresionType == expresionInfo.expresionType)
-                return new ExpresionInfo(ExpresionType.BOOLEAN);
-
-            if (this.expresionType == ExpresionType.FLOAT && expresionInfo.expresionType == ExpresionType.INT)
-                return new ExpresionInfo(ExpresionType.BOOLEAN);
-            if (this.expresionType == ExpresionType.INT && expresionInfo.expresionType == ExpresionType.FLOAT)
-                return new ExpresionInfo(ExpresionType.BOOLEAN);
-
-            return null;
-        }
-
-        ExpresionInfo relation(ExpresionInfo expresionInfo) {
-            if (this.expresionType == expresionInfo.expresionType)
-                return new ExpresionInfo(ExpresionType.BOOLEAN);
-
-            if (this.expresionType == ExpresionType.FLOAT && expresionInfo.expresionType == ExpresionType.INT)
-                return new ExpresionInfo(ExpresionType.BOOLEAN);
-            if (this.expresionType == ExpresionType.INT && expresionInfo.expresionType == ExpresionType.FLOAT)
-                return new ExpresionInfo(ExpresionType.BOOLEAN);
-
-            return null;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj instanceof ExpresionInfo) {
-                if (this.expresionType != ExpresionType.FLOAT && this.expresionType != ExpresionType.INT)
-                    return this.expresionType == ((ExpresionInfo) obj).expresionType;
-
-                return ((ExpresionInfo) obj).expresionType == ExpresionType.INT || ((ExpresionInfo) obj).expresionType == ExpresionType.FLOAT;
-            }
-            return super.equals(obj);
-        }
-    }
-
     public UseSymbolListener(String fileName, ErrorHandler errorHandler, SymbolTable masterSymbolTable) {
         super(fileName, errorHandler, masterSymbolTable);
     }
@@ -126,7 +45,7 @@ public class UseSymbolListener extends MainListener {
     @Override
     public void exitPrint_statment(jythonParser.Print_statmentContext ctx) {
         int line = ctx.start.getLine();
-        if (tempExpresionInfo.isEmpty() || tempExpresionInfo.pop().expresionType == ExpresionInfo.ExpresionType.OBJECT){
+        if (tempExpresionInfo.isEmpty() || tempExpresionInfo.pop().expresionType == ExpresionInfo.ExpresionType.OBJECT) {
             errorHandler.printError(line);
         }
         tempExpresionInfo.clear();
@@ -205,12 +124,19 @@ public class UseSymbolListener extends MainListener {
         int line = ctx.start.getLine();
 
         if (!symbolTable.findMethod(methodName).isEmpty()) {
-            // TODO Masoud 6/11/2019: (Logic) after find return exp and check argument(s) type
+            ArrayList<InputInfo> inputInfos = new ArrayList<>();
+            for (ExpresionInfo exp : expresionList)
+                inputInfos.add(new InputInfo(exp));
 
+            if (symbolTable.findMethodByHash(SubMethodSymbolTable.getMethodHash(methodName, inputInfos)) == null)
+                errorHandler.notFindMethod(methodName, line);
 
         } else {
             errorHandler.notFindMethod(methodName, line);
         }
+
+
+        expresionList.clear();
     }
 
 
@@ -327,9 +253,19 @@ public class UseSymbolListener extends MainListener {
     public void exitArrayDec(jythonParser.ArrayDecContext ctx) {
         int line = ctx.start.getLine();
 
-        if (tempExpresionInfo.isEmpty() || tempExpresionInfo.peek().expresionType != ExpresionInfo.ExpresionType.INT){
+        if (tempExpresionInfo.isEmpty() || tempExpresionInfo.peek().expresionType != ExpresionInfo.ExpresionType.INT) {
             errorHandler.arraySizeError(line);
         }
+
+        tempExpresionInfo.clear();
+    }
+
+    @Override
+    public void exitArg(jythonParser.ArgContext ctx) {
+        if (tempExpresionInfo.isEmpty())
+            expresionList.add(null);
+        else
+            expresionList.add(tempExpresionInfo.peek());
 
         tempExpresionInfo.clear();
     }

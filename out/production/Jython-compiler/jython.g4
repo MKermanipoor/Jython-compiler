@@ -94,8 +94,8 @@ leftExp :    ID                                 #leftExp_varName
           |  'self' '.' leftExp                 #leftExp_self;
 
 args :  '(' (explist)? ')' ;
-explist  :  expression (',' expression)*;
-
+explist  :  arg (',' arg)*;
+arg : expression;
 
 assignment_operators : '=' | '+=' | '-=' | '*=' | '/=' ;
 eq_neq               : '==' | '!=' ;

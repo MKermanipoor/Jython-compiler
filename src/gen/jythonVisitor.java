@@ -203,6 +203,12 @@ public interface jythonVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExplist(jythonParser.ExplistContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link jythonParser#arg}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArg(jythonParser.ArgContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link jythonParser#assignment_operators}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

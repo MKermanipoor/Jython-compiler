@@ -304,7 +304,7 @@ public class myListener extends jythonBaseListener {
                 ErrorHandler.notDefineMethod(ctx.start.getLine(), name, symbolTable, ctx);
             } else {
                 SymbolTableMethodEntity symbolTableMethodEntity = (SymbolTableMethodEntity) symbolTable.getSymbolTableEntity(name);
-                int passSize = ((ctx.args().explist() == null)) ? 0 : ctx.args().explist().expression().size();
+                int passSize = ((ctx.args().explist() == null)) ? 0 : ctx.args().explist().arg().size();
 
                 if (symbolTableMethodEntity.parameterSize() != passSize) {
 

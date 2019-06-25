@@ -1,5 +1,6 @@
 package ver02.symbolTable.subSybmolTable;
 
+import ver02.listeners.ExpresionInfo;
 import ver02.symbolTable.SymbolTable;
 import ver02.symbolTable.subSybmolTable.SubVarSymbolTable.VarEntity.VarType;
 
@@ -17,7 +18,7 @@ public class SubMethodSymbolTable extends SubSymbolTable<SubMethodSymbolTable.Me
 
     public void addMethodEntity(String methodName, MethodEntity.ReturnType returnType, boolean array, String className, ArrayList<MethodEntity.InputInfo> inputList, int lineDefinition) {
         String hash = getMethodHash(methodName, inputList);
-        add(hash, new MethodEntity(returnType, array,className, inputList, lineDefinition));
+        add(hash, new MethodEntity(returnType, array, className, inputList, lineDefinition));
 
         methodNameToEntity.computeIfAbsent(methodName, k -> new HashSet<>());
         methodNameToEntity.get(methodName).add(hash);
@@ -60,7 +61,7 @@ public class SubMethodSymbolTable extends SubSymbolTable<SubMethodSymbolTable.Me
         private String className;
         private final int lineDefinition;
 
-        public MethodEntity(ReturnType returnType, boolean array,String className,ArrayList<InputInfo> inputType, int lineDefinition) {
+        public MethodEntity(ReturnType returnType, boolean array, String className, ArrayList<InputInfo> inputType, int lineDefinition) {
             this.returnType = returnType;
             this.inputType = inputType;
             this.array = array;
@@ -88,7 +89,7 @@ public class SubMethodSymbolTable extends SubSymbolTable<SubMethodSymbolTable.Me
             return SubMethodSymbolTable.getMethodHash(methodName, inputType);
         }
 
-        public static class InputInfo{
+        public static class InputInfo {
             private final VarType varType;
             private String className = "";
             private boolean array = false;
@@ -96,6 +97,31 @@ public class SubMethodSymbolTable extends SubSymbolTable<SubMethodSymbolTable.Me
             public InputInfo(VarType varType, String className) {
                 this.varType = varType;
                 this.className = className;
+            }
+
+            public InputInfo(ExpresionInfo expresionInfo) {
+                switch (expresionInfo.getExpresionType()) {
+                    case BOOLEAN:
+                        varType = VarType.BOOLEAN;
+                        break;
+                    case STRING:
+                        varType = VarType.STRING;
+                        break;
+                    case FLOAT:
+                        varType = VarType.FLOAT;
+                        break;
+                    case INT:
+                        varType = VarType.INT;
+                        break;
+                    case OBJECT:
+                        varType = VarType.OBJECT;
+                        break;
+                    default:
+                        throw new IllegalArgumentException("I don't know var type");
+                }
+
+                className = expresionInfo.getClassName();
+                array = expresionInfo.isArr();
             }
 
             public void setArray(boolean array) {

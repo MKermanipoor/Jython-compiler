@@ -69,7 +69,7 @@ public class ErrorHandler {
                     SymbolTableEntity symbolTableEntity = s.getSymbolTableEntity(errorEntity.name);
                     if (symbolTableEntity instanceof SymbolTableMethodEntity && symbolTableEntity.isValid()) {
                         jythonParser.Method_callContext ctx = errorEntity.ctx;
-                        int passSize = ((ctx.args().explist() == null)) ? 0 : ctx.args().explist().expression().size();
+                        int passSize = ((ctx.args().explist() == null)) ? 0 : ctx.args().explist().arg().size();
 
                         if (((SymbolTableMethodEntity) symbolTableEntity).parameterSize() == passSize)
                             continue;

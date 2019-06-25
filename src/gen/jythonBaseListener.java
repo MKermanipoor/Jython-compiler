@@ -387,6 +387,18 @@ public class jythonBaseListener implements jythonListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterArg(jythonParser.ArgContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArg(jythonParser.ArgContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAssignment_operators(jythonParser.Assignment_operatorsContext ctx) { }
 	/**
 	 * {@inheritDoc}

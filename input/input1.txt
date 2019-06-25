@@ -11,7 +11,20 @@ def int rizz(){
     while (t){
     print(c)
     }
-    }
+
+    test()
+    test(b)
+    test(b,b)
+    test(b,c)
+}
+
+def int test(){
+
+}
+
+
+def int test(int i, int j){
+
 }
 }
 
