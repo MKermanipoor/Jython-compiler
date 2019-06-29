@@ -32,11 +32,21 @@ public class FillSymbolTableListener extends MainListener {
     public void enterClassDec(jythonParser.ClassDecContext ctx) {
         String className = ctx.USER_TYPE(0).getText();
         int line = ctx.start.getLine();
+        String parentName = "";
+        if (ctx.USER_TYPE().size() > 1){
+            parentName = ctx.USER_TYPE(1).getText();
+        }
 
         if (masterSymbolTable.findClass(className) != null) {
             errorHandler.doubleDefineClass(className, line);
-        } else {
+        } else if (parentName.isEmpty()){
             symbolTable.addClassEntity(className, line, getClassHash(className));
+        } else{
+            if (importClass.contains(parentName)){
+                symbolTable.addClassEntity(className, line, getClassHash(className), parentName);
+            }else{
+                errorHandler.notFindClass(parentName, line);
+            }
         }
 
         super.enterClassDec(ctx);

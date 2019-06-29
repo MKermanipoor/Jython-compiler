@@ -49,8 +49,7 @@ public class SymbolTable {
 
     public void addClassEntity(String className, int lineDefinition, String classHash, String supperCalssName) {
         checkClassTable();
-
-        // TODO Masoud 6/7/2019: (Logic) complete
+        classTable.addClass(className, lineDefinition, classHash, supperCalssName);
     }
 
     public SubClassSymbolTable.ClassEntity findClass(String className) {
