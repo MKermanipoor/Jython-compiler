@@ -11,7 +11,7 @@ Compiler f
 def int rizz(){
 
     get().b = f.get().f.get().f.f.f.get().c
-    
+
     while (t){
     print(c)
     }

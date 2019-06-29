@@ -267,7 +267,8 @@ public class UseSymbolListener extends MainListener {
         int line = ctx.start.getLine();
         setExpresionInfo(tempExpresionInfo.pop());
 
-        if (!leftExpresionInfo.equals(rightExpresionInfo)) {
+
+        if (leftExpresionInfo != null && rightExpresionInfo != null && !leftExpresionInfo.equals(rightExpresionInfo)) {
             errorHandler.contConvert(leftExpresionInfo.expresionType.toString(), rightExpresionInfo.expresionType.toString(), line);
         }
 
@@ -280,9 +281,9 @@ public class UseSymbolListener extends MainListener {
 
     @Override
     public void exitAssignment_operators(jythonParser.Assignment_operatorsContext ctx) {
-        if (getExpresionInfo() == null)
+        if (getExpresionInfo() == null && !tempExpresionInfo.isEmpty()) {
             setExpresionInfo(tempExpresionInfo.pop());
-
+        }
         tempExpresionInfo.clear();
         leftExpresion = false;
 
