@@ -13,10 +13,10 @@ class NotConvert extends Error {
 
     @Override
     public String getText() {
-        return "Error" + code +
+        return "Error " + code +
                 " : in line " + line +
                 ", Incompatible types : " + leftType +
-                "can not be converted to " + rightType +
+                " can not be converted to " + rightType +
                 ".";
     }
 }

@@ -105,6 +105,70 @@ public class UseSymbolListener extends MainListener {
     }
 
     @Override
+    public void exitLeftExp_methodCall(jythonParser.LeftExp_methodCallContext ctx) {
+        String methodName = ctx.ID().getText();
+        int line = ctx.start.getLine();
+
+        if (!symbolTable.findMethod(methodName).isEmpty()) {
+            ArrayList<InputInfo> inputInfos = new ArrayList<>();
+            for (ExpresionInfo exp : expresionList)
+                inputInfos.add(new InputInfo(exp));
+
+            SubMethodSymbolTable.MethodEntity entity = symbolTable.findMethodByHash(SubMethodSymbolTable.getMethodHash(methodName, inputInfos));
+            if (entity == null) {
+                errorHandler.notFindMethod(methodName, line);
+            }else{
+                if (entity.getReturnType() == SubMethodSymbolTable.MethodEntity.ReturnType.OBJECT) {
+                    SubClassSymbolTable.ClassEntity classEntity = masterSymbolTable.findClass(entity.getClassName());
+                    if (classEntity != null){
+                        tempSymbolTable = masterSymbolTable.getChild(classEntity.getClassHash());
+                    }
+                }
+                tempExpresionInfo.push(new ExpresionInfo(ExpresionInfo.ExpresionType.get(entity.getReturnType())));
+            }
+
+        } else {
+            errorHandler.notFindMethod(methodName, line);
+        }
+
+
+        expresionList.clear();
+    }
+
+    @Override
+    public void exitLeftExp_subMethodCall(jythonParser.LeftExp_subMethodCallContext ctx) {
+        String methodName = ctx.ID().getText();
+        int line = ctx.start.getLine();
+
+        if (tempSymbolTable == null) {
+            errorHandler.notFindMethod(methodName, line);
+        }else{
+            if (!symbolTable.findMethod(methodName).isEmpty()) {
+                ArrayList<InputInfo> inputInfos = new ArrayList<>();
+                for (ExpresionInfo exp : expresionList)
+                    inputInfos.add(new InputInfo(exp));
+
+                SubMethodSymbolTable.MethodEntity entity = symbolTable.findMethodByHash(SubMethodSymbolTable.getMethodHash(methodName, inputInfos));
+                if (entity == null) {
+                    errorHandler.notFindMethod(methodName, line);
+                }else{
+                    if (entity.getReturnType() == SubMethodSymbolTable.MethodEntity.ReturnType.OBJECT) {
+                        SubClassSymbolTable.ClassEntity classEntity = masterSymbolTable.findClass(entity.getClassName());
+                        if (classEntity != null){
+                            tempSymbolTable = masterSymbolTable.getChild(classEntity.getClassHash());
+                        }
+                    }
+                    tempExpresionInfo.push(new ExpresionInfo(ExpresionInfo.ExpresionType.get(entity.getReturnType())));
+                }
+            }else{
+                    errorHandler.notFindMethod(methodName, line);
+            }
+        }
+
+        expresionList.clear();
+    }
+
+    @Override
     public void enterLeftExp_self(jythonParser.LeftExp_selfContext ctx) {
         stack.push(symbolTable);
         symbolTable = masterSymbolTable.getChild(getClassHash(className));
@@ -181,20 +245,20 @@ public class UseSymbolListener extends MainListener {
             ExpresionInfo resultInfo = tempExpresionInfo.pop().div_mult_mod_add_sub(tempExpresionInfo.pop());
             if (resultInfo == null)
                 errorHandler.notDefineOperation(line);
-            else
-                tempExpresionInfo.push(resultInfo);
+
+            tempExpresionInfo.push(resultInfo);
         } else if (ctx.eq_neq() != null) {
             ExpresionInfo resultInfo = tempExpresionInfo.pop().equal_notEqual(tempExpresionInfo.pop());
             if (resultInfo == null)
                 errorHandler.notDefineOperation(line);
-            else
-                tempExpresionInfo.push(resultInfo);
+
+            tempExpresionInfo.push(resultInfo);
         } else if (ctx.relation_operators() != null) {
             ExpresionInfo resultInfo = tempExpresionInfo.pop().relation(tempExpresionInfo.pop());
             if (resultInfo == null)
                 errorHandler.notDefineOperation(line);
-            else
-                tempExpresionInfo.push(resultInfo);
+
+            tempExpresionInfo.push(resultInfo);
         }
     }
 
@@ -265,8 +329,6 @@ public class UseSymbolListener extends MainListener {
         if (tempExpresionInfo.isEmpty())
             expresionList.add(null);
         else
-            expresionList.add(tempExpresionInfo.peek());
-
-        tempExpresionInfo.clear();
+            expresionList.add(tempExpresionInfo.pop());
     }
 }

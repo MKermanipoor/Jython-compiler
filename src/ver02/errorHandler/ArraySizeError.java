@@ -1,7 +1,7 @@
 package ver02.errorHandler;
 
-public class ArraySizeError extends Error {
-    public ArraySizeError(int line) {
+class ArraySizeError extends Error {
+    ArraySizeError(int line) {
         super(line, 210);
     }
 

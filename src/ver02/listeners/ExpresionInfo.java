@@ -1,5 +1,6 @@
 package ver02.listeners;
 
+import ver02.symbolTable.subSybmolTable.SubMethodSymbolTable.MethodEntity.ReturnType;
 import ver02.symbolTable.subSybmolTable.SubVarSymbolTable.VarEntity.VarType;
 
 public class ExpresionInfo {
@@ -8,6 +9,22 @@ public class ExpresionInfo {
 
         public static ExpresionType get(VarType varType) {
             switch (varType) {
+                case OBJECT:
+                    return OBJECT;
+                case INT:
+                    return INT;
+                case FLOAT:
+                    return FLOAT;
+                case STRING:
+                    return STRING;
+                case BOOLEAN:
+                    return BOOLEAN;
+            }
+            return null;
+        }
+
+        public static ExpresionType get(ReturnType returnType){
+            switch (returnType){
                 case OBJECT:
                     return OBJECT;
                 case INT:
